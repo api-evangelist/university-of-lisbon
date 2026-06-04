@@ -1,0 +1,21 @@
+{
+  "repo": "university-of-lisbon",
+  "feeds": [
+    {
+      "source": "https://www.ulisboa.pt/en",
+      "feed_url": "https://www.ulisboa.pt/en",
+      "title": "University of Lisbon",
+      "saved": 0,
+      "method": "none"
+    },
+    {
+      "source": "https://tecnico.ulisboa.pt/pt/noticias/",
+      "feed_url": "http://tecnico.ulisboa.pt/pt/noticias/rss",
+      "title": "Instituto Superior Tecnico Noticias",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-06-03T00:00:00Z"
+}

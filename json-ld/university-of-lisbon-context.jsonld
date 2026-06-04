@@ -1,0 +1,95 @@
+{
+  "@context": {
+    "schema": "https://schema.org/",
+    "ulisboa": "https://www.ulisboa.pt/vocab#",
+    "@vocab": "https://www.ulisboa.pt/vocab#",
+    "name": "schema:name",
+    "description": "schema:description",
+    "url": "schema:url",
+    "logo": "schema:logo",
+    "sameAs": "schema:sameAs",
+    "email": "schema:email",
+    "telephone": "schema:telephone",
+    "address": "schema:address",
+    "foundingDate": "schema:foundingDate",
+    "department": "schema:department",
+    "subOrganization": "schema:subOrganization",
+
+    "Organization": "schema:CollegeOrUniversity",
+    "institution": {
+      "@id": "ulisboa:institution",
+      "@type": "schema:CollegeOrUniversity"
+    },
+
+    "api": "ulisboa:api",
+    "baseURL": "ulisboa:baseURL",
+    "humanURL": "ulisboa:humanURL",
+
+    "AcademicTerm": "ulisboa:AcademicTerm",
+    "academicTerm": "ulisboa:academicTerm",
+    "Degree": "ulisboa:Degree",
+    "degree": "ulisboa:degree",
+    "Course": "schema:Course",
+    "course": {
+      "@id": "ulisboa:course",
+      "@type": "schema:Course"
+    },
+    "acronym": "ulisboa:acronym",
+    "credits": "ulisboa:credits",
+    "competences": "ulisboa:competences",
+    "teachers": "ulisboa:teachers",
+    "campus": "ulisboa:campus",
+
+    "Space": "ulisboa:Space",
+    "space": {
+      "@id": "ulisboa:space",
+      "@type": "ulisboa:Space"
+    },
+    "type": "schema:additionalType",
+    "topLevelSpace": "ulisboa:topLevelSpace",
+    "containedSpaces": "ulisboa:containedSpaces",
+    "parentSpace": "ulisboa:parentSpace",
+    "capacity": "ulisboa:capacity",
+
+    "Person": "schema:Person",
+    "person": {
+      "@id": "ulisboa:person",
+      "@type": "schema:Person"
+    },
+    "roles": "ulisboa:roles",
+    "username": "ulisboa:username",
+
+    "Repository": "ulisboa:Repository",
+    "repository": {
+      "@id": "ulisboa:repository",
+      "@type": "schema:DataCatalog"
+    },
+    "oaiPmhBaseURL": "ulisboa:oaiPmhBaseURL"
+  },
+  "@type": "schema:CollegeOrUniversity",
+  "name": "University of Lisbon",
+  "url": "https://www.ulisboa.pt/en",
+  "sameAs": [
+    "https://github.com/ULisboa",
+    "https://www.linkedin.com/school/universidade-de-lisboa/"
+  ],
+  "description": "Universidade de Lisboa (ULisboa), Portugal's largest public university. Its programmable interfaces include the FenixEdu academic REST API operated by Instituto Superior Tecnico and the OAI-PMH metadata interface of the DSpace institutional repository.",
+  "subOrganization": [
+    {
+      "@type": "schema:CollegeOrUniversity",
+      "name": "Instituto Superior Tecnico",
+      "url": "https://tecnico.ulisboa.pt/",
+      "api": {
+        "name": "FenixEdu Academic API",
+        "humanURL": "https://fenixedu.org/dev/api/",
+        "baseURL": "https://fenix.tecnico.ulisboa.pt/api/fenix/v1"
+      }
+    }
+  ],
+  "repository": {
+    "@type": "schema:DataCatalog",
+    "name": "Repositorio Cientifico de Acesso Aberto da ULisboa",
+    "url": "https://repositorio.ulisboa.pt/",
+    "oaiPmhBaseURL": "https://repositorio.ulisboa.pt/server/oai/request"
+  }
+}
