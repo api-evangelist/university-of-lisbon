@@ -1,0 +1,46 @@
+---
+name: University of Lisbon
+description: University of Lisbon public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/university-of-lisbon/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 2
+    summary: >-
+      The University of Lisbon has no single institutional developer portal. Two
+      programmable interfaces were verified live: the FenixEdu academic REST API at
+      Instituto Superior Tecnico (HTTP 200, returns JSON from /api/fenix/v1/about
+      identifying "Instituto Superior Tecnico") and the DSpace institutional
+      repository OAI-PMH endpoint (HTTP 200, valid Identify response). The ULisboa
+      GitHub organization exists (4 public Java repos focused on Erasmus Without
+      Paper / EWP). The DSpace OAI path is /server/oai/request, not the legacy
+      /oai/request (404). The main marketing site returns 500 to bare requests but
+      200 with a browser User-Agent. The research portal (Pure) returns 403 to
+      automated requests and was not confirmed to expose a public API. No fabricated
+      endpoints: only URLs probed live are listed below.
+    endpoints:
+      - url: https://fenix.tecnico.ulisboa.pt/api/fenix/v1/about
+        status: 200
+        note: FenixEdu API live, returns JSON for Instituto Superior Tecnico.
+      - url: https://fenixedu.org/dev/api/
+        status: 200
+        note: FenixEdu developer API documentation pages.
+      - url: https://repositorio.ulisboa.pt/server/oai/request?verb=Identify
+        status: 200
+        note: Valid OAI-PMH 2.0 Identify; DSpace institutional repository.
+      - url: https://repositorio.ulisboa.pt/oai/request?verb=Identify
+        status: 404
+        note: Legacy OAI path not used; correct path is /server/oai/request.
+      - url: https://repositorio.ulisboa.pt/
+        status: 200
+        note: DSpace institutional repository home.
+      - url: https://github.com/ULisboa
+        status: 200
+        note: Official ULisboa GitHub org, 4 EWP-focused Java repos.
+      - url: https://www.ulisboa.pt/
+        status: 200
+        note: Official website (returns 500 without browser User-Agent, 200 with one).
+      - url: https://researchportal.ulisboa.pt/en/
+        status: 403
+        note: Research portal (Pure); blocks automated requests, no confirmed public API.

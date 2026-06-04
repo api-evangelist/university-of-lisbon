@@ -1,0 +1,82 @@
+---
+aid: university-of-lisbon
+name: University of Lisbon
+description: >-
+  The University of Lisbon (Universidade de Lisboa, ULisboa) is Portugal's largest
+  public university, based in Lisbon, and is ranked #260 in the QS World University
+  Rankings 2025. Its public developer/API footprint is decentralized across its
+  schools and services rather than offered through a single institutional developer
+  portal. The most prominent programmable interfaces are the FenixEdu academic API
+  operated by Instituto Superior Tecnico (tecnico.ulisboa.pt) and the OAI-PMH metadata
+  interface of the DSpace institutional repository (repositorio.ulisboa.pt). The
+  ULisboa GitHub organization publishes open-source Java libraries focused on Erasmus
+  Without Paper (EWP) data exchange. There is no single self-service commercial API
+  program; most interfaces are open metadata endpoints or affiliation-gated systems.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/university-of-lisbon/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Portugal
+  - Open Data
+  - Repository
+  - Metadata
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: university-of-lisbon:fenixedu-tecnico
+    name: FenixEdu Academic API (Instituto Superior Tecnico)
+    description: >-
+      Public REST API of the FenixEdu academic information system operated by
+      Instituto Superior Tecnico, a school of the University of Lisbon. Exposes
+      institutional data including people, spaces, degrees, courses, academic
+      terms, contacts, canteen, parking and shuttle information. Public endpoints
+      are accessible without authorization; personal/academic endpoints require
+      user authorization. Verified live returning JSON at the /about endpoint.
+    humanURL: https://fenixedu.org/dev/api/
+    baseURL: https://fenix.tecnico.ulisboa.pt/api/fenix/v1
+    tags: [ Academic, Courses, Degrees, Spaces, SIS, FenixEdu ]
+    properties:
+      - type: Documentation
+        url: https://fenixedu.org/dev/api/
+      - type: GitHub
+        url: https://github.com/fenixedu
+  - aid: university-of-lisbon:repositorio-oai-pmh
+    name: Repositorio da Universidade de Lisboa OAI-PMH
+    description: >-
+      OAI-PMH 2.0 metadata harvesting interface for the DSpace-based institutional
+      open-access repository (Repositorio Cientifico de Acesso Aberto da ULisboa),
+      containing theses, dissertations, articles and other scholarly outputs.
+      Verified live with a valid Identify response (protocol version 2.0,
+      granularity to seconds, operational since November 2002).
+    humanURL: https://repositorio.ulisboa.pt/
+    baseURL: https://repositorio.ulisboa.pt/server/oai/request
+    tags: [ Repository, OAI-PMH, Metadata, DSpace, Open Access, Scholarly ]
+    properties:
+      - type: Documentation
+        url: https://repositorio.ulisboa.pt/
+common:
+  - type: Website
+    url: https://www.ulisboa.pt/en
+  - type: GitHub
+    url: https://github.com/ULisboa
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/universidade-de-lisboa/
+  - type: SourceCode
+    url: https://github.com/ULisboa
+  - type: Plans
+    url: plans/university-of-lisbon-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/university-of-lisbon-rate-limits.yml
+  - type: FinOps
+    url: finops/university-of-lisbon-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
