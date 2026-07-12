@@ -61,6 +61,8 @@ apis:
       - type: Documentation
         url: https://repositorio.ulisboa.pt/
 common:
+  - type: DomainSecurity
+    url: security/university-of-lisbon-domain-security.yml
   - type: Website
     url: https://www.ulisboa.pt/en
   - type: GitHub

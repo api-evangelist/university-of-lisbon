@@ -1,0 +1,32 @@
+generated: '2026-07-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.ulisboa.pt
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Jan 10 03:14:55 2027 GMT
+  hsts: false
+- host: fenixedu.org
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct  3 04:24:37 2026 GMT
+  hsts: false
+- host: fenix.tecnico.ulisboa.pt
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Dec 10 15:59:46 2026 GMT
+  hsts: true
+  hsts_max_age: 15768000
+domains:
+- domain: ulisboa.pt
+  dnssec: true
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: none
+- domain: fenixedu.org
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: false
