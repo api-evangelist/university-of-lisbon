@@ -7,16 +7,16 @@
       "title": "University of Lisbon",
       "saved": 0,
       "method": "none",
-      "error": "fetch_failed: HTTPError"
+      "error": "parse_failed"
     },
     {
       "source": "https://tecnico.ulisboa.pt/pt/noticias/",
       "feed_url": "https://tecnico.ulisboa.pt/pt/noticias/rss",
       "title": "Instituto Superior Tecnico Noticias",
-      "saved": 5,
+      "saved": 6,
       "method": "rss"
     }
   ],
-  "post_count": 75,
-  "fetched": "2026-08-22T20:08:02Z"
+  "post_count": 81,
+  "fetched": "2026-08-30T22:05:13Z"
 }
