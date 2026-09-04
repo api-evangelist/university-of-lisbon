@@ -1,17 +1,31 @@
 ---
 aid: university-of-lisbon
 name: University of Lisbon
+x-type: university
+x-category: Public Research University
 description: >-
   The University of Lisbon (Universidade de Lisboa, ULisboa) is Portugal's largest
-  public university, based in Lisbon, and is ranked #260 in the QS World University
-  Rankings 2025. Its public developer/API footprint is decentralized across its
-  schools and services rather than offered through a single institutional developer
-  portal. The most prominent programmable interfaces are the FenixEdu academic API
-  operated by Instituto Superior Tecnico (tecnico.ulisboa.pt) and the OAI-PMH metadata
-  interface of the DSpace institutional repository (repositorio.ulisboa.pt). The
-  ULisboa GitHub organization publishes open-source Java libraries focused on Erasmus
-  Without Paper (EWP) data exchange. There is no single self-service commercial API
-  program; most interfaces are open metadata endpoints or affiliation-gated systems.
+  public university — 18 schools plus the National Museum of Natural History and
+  Science — and it is a federation of buyers rather than a producer of APIs. It runs no
+  central developer portal, publishes no OpenAPI of its own, and has no open data
+  portal: data.ulisboa.pt and dados.ulisboa.pt do not resolve, and the institution has
+  no organization on the national portal dados.gov.pt. What it does operate, on its own
+  infrastructure, is a small but real set of standards-based surfaces: the FenixEdu
+  academic API at Instituto Superior Tecnico — institution-authored open-source software
+  serving degrees, courses, campus spaces, blueprints, parking and a 1.2 MB serialized
+  domain model anonymously, with Bennu OAuth 2.0 in front of person-scoped data; two
+  independent OAI-PMH 2.0 endpoints, one over a 100,245-item DSpace 7.6.1 repository
+  running since 2002 and one over the Koha union library catalog; and a SAML 2.0
+  identity provider published into the national RCTSaai federation and onward to
+  eduGAIN, alongside a second IdP for Instituto Superior Tecnico that asserts SIRTFI.
+  The institution also authors an open-source Erasmus Without Paper node on GitHub,
+  which is its most substantive piece of public API engineering. Everything else is
+  someone else's contract running under its name — most importantly
+  researchportal.ulisboa.pt, which looks institutional and CNAMEs to
+  ulisbon.elsevierpure.com; its own OAI-PMH Identify calls it a "Pure OAI Repository"
+  and its Pure Web Service OpenAPI is behind an API key. Its Erasmus Without Paper node
+  is hosted by another university entirely. Both are recorded here as tenancies, with
+  the vendor contract deliberately left out of this repository.
 type: Index
 deliveryModel:
   model: saas
@@ -36,64 +50,363 @@ accessModel:
   - plans
   generated: '2026-07-22'
   method: derived
-position: Consumer
+position: Consuming
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/university-of-lisbon.png
 url: https://raw.githubusercontent.com/api-evangelist/university-of-lisbon/refs/heads/main/apis.yml
 tags:
-  - Education
-  - Higher Education
   - University
+  - Higher Education
+  - Education
   - Portugal
-  - Open Data
-  - Repository
+  - Europe
+  - Public Research University
+  - Course Catalog
+  - Research Repository
+  - Library
+  - Identity Federation
+  - OAI-PMH
+  - Open Access
+  - Erasmus Without Paper
   - Metadata
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-09-01'
 specificationVersion: '0.23'
 apis:
   - aid: university-of-lisbon:fenixedu-tecnico
     name: FenixEdu Academic API (Instituto Superior Tecnico)
+    x-operator: institution
+    x-operator-evidence: >-
+      Host is under the institution's own registrable domain ulisboa.pt and resolves to
+      193.136.102.79 on the Portuguese academic network. GET /about returns
+      institutionName "Instituto Superior Tecnico"; the OAuth consent dialog at
+      /oauth/userdialog carries an Instituto Superior Tecnico copyright notice. FenixEdu
+      is open-source software authored by this institution, so both the deployment and
+      the software are theirs. No vendor name appears anywhere in the served payloads.
     description: >-
-      Public REST API of the FenixEdu academic information system operated by
-      Instituto Superior Tecnico, a school of the University of Lisbon. Exposes
-      institutional data including people, spaces, degrees, courses, academic
-      terms, contacts, canteen, parking and shuttle information. Public endpoints
-      are accessible without authorization; personal/academic endpoints require
-      user authorization. Verified live returning JSON at the /about endpoint.
+      Public REST API of the FenixEdu academic information system operated by Instituto
+      Superior Tecnico, a school of the University of Lisbon. Anonymous access to
+      institution metadata, academic terms, contacts, the degree and course catalog,
+      campus spaces and JPEG floor-plan blueprints, parking, canteen, shuttle and a
+      serialized domain model; Bennu OAuth 2.0 in front of curriculum, enrolments,
+      calendars and payments. Probed live 2026-09-01: nine anonymous endpoints returned
+      200, /person returned 401, /canteen returned 500 with a Java stack trace.
     humanURL: https://fenixedu.org/dev/api/
     baseURL: https://fenix.tecnico.ulisboa.pt/api/fenix/v1
-    tags: [ Academic, Courses, Degrees, Spaces, SIS, FenixEdu ]
+    tags: [ Academic, Courses, Degrees, Spaces, Campus Life, SIS, FenixEdu, OAuth ]
     properties:
       - type: Documentation
         url: https://fenixedu.org/dev/api/
-      - type: GitHub
-        url: https://github.com/fenixedu
+      - type: OpenAPI
+        url: openapi/university-of-lisbon-fenixedu-academic-api-openapi.yml
+      - type: Authentication
+        url: authentication/university-of-lisbon-authentication.yml
+      - type: Scopes
+        url: scopes/university-of-lisbon-scopes.yml
+      - type: Errors
+        url: errors/university-of-lisbon-errors.yml
+      - type: SourceCode
+        url: https://github.com/fenixedu/fenixedu-academic
   - aid: university-of-lisbon:repositorio-oai-pmh
-    name: Repositorio da Universidade de Lisboa OAI-PMH
+    name: Repositorio da Universidade de Lisboa — OAI-PMH
+    x-operator: institution
+    x-operator-evidence: >-
+      Host under ulisboa.pt with no vendor CNAME. Identify returns repositoryName
+      "Repositorio Cientifico de Acesso Aberto da ULisboa", adminEmail
+      repositorio@ulisboa.pt, repositoryIdentifier repositorio.ulisboa.pt. The software
+      is DSpace, which is open source, and the hosting is FCCN national research-network
+      infrastructure under the RCAAP programme — a public consortium, not a commercial
+      platform — so the surface is the institution's.
     description: >-
-      OAI-PMH 2.0 metadata harvesting interface for the DSpace-based institutional
-      open-access repository (Repositorio Cientifico de Acesso Aberto da ULisboa),
-      containing theses, dissertations, articles and other scholarly outputs.
-      Verified live with a valid Identify response (protocol version 2.0,
-      granularity to seconds, operational since November 2002).
+      OAI-PMH 2.0 metadata harvesting interface over the DSpace 7.6.1 institutional
+      open-access repository. Operating since November 2002; 100,245 items; twelve
+      metadata formats including oai_dc, marcxml, mods, mets, ore, rdf, dim, qdc, didl,
+      xoai, etdms and uketd_dc. Verified live 2026-09-01 with a real Identify response.
     humanURL: https://repositorio.ulisboa.pt/
     baseURL: https://repositorio.ulisboa.pt/server/oai/request
     tags: [ Repository, OAI-PMH, Metadata, DSpace, Open Access, Scholarly ]
     properties:
       - type: Documentation
         url: https://repositorio.ulisboa.pt/
+      - type: Example
+        url: examples/repositorio-oai-identify.xml
+  - aid: university-of-lisbon:repositorio-dspace-rest
+    name: Repositorio da Universidade de Lisboa — DSpace REST API
+    x-operator: institution
+    x-operator-evidence: >-
+      Same institution-owned host as the OAI-PMH surface. The API root returns
+      dspaceName "Repositorio Cientifico de Acesso Aberto da ULisboa" and dspaceServer
+      https://repositorio.ulisboa.pt/server.
+    description: >-
+      Anonymous HAL+JSON REST API of the institution's DSpace 7.6.1 repository —
+      communities, collections, items, bitstreams, discovery search, metadata schemas
+      and external-source integrations. The deployment is the institution's; the
+      CONTRACT is DSpace's, shared by every DSpace 7 installation in the world, so no
+      OpenAPI is saved into this repository for it. The deployed configuration is
+      itself evidence: orcid, orcidWorks, datacite, crossref, openAIREFunding, pubmed,
+      arxiv, scielo, sherpa and CienciaVitaeCurriculum are all enabled external sources.
+    humanURL: https://repositorio.ulisboa.pt/
+    baseURL: https://repositorio.ulisboa.pt/server/api
+    tags: [ Repository, DSpace, REST, HAL, Open Access, Discovery ]
+    properties:
+      - type: Example
+        url: examples/repositorio-dspace-api-root.json
+      - type: Example
+        url: examples/repositorio-dspace-externalsources.json
+      - type: Documentation
+        url: https://github.com/DSpace/RestContract
+  - aid: university-of-lisbon:catalogo-bibliotecas-oai-pmh
+    name: Catalogo Coletivo ULisboa (Koha) — OAI-PMH
+    x-operator: institution
+    x-operator-evidence: >-
+      catalogo-bibliotecas.ulisboa.pt CNAMEs to ul-web11.ulisboa.pt (194.117.3.27), the
+      institution's own web infrastructure. Identify returns adminEmail
+      no-reply@reitoria.ulisboa.pt. Koha is open-source software, self-hosted.
+    description: >-
+      OAI-PMH 2.0 interface over the union library catalog of the 18 schools, the
+      National Museum of Natural History and Science and the Tropical Scientific
+      Research Institute, running on Koha. Serves marcxml. Verified live 2026-09-01.
+      Two configuration defects were observed and are not being smoothed over:
+      repositoryName is "ULisboa - " with an empty trailing component, and
+      earliestDatestamp is 0001-01-01 rather than a real date. The OPAC's RSS output
+      at opac-search.pl returns 403.
+    humanURL: https://catalogo-bibliotecas.ulisboa.pt/
+    baseURL: https://catalogo-bibliotecas.ulisboa.pt/cgi-bin/koha/oai.pl
+    tags: [ Library, LibraryCatalog, OAI-PMH, MARC21, Koha, Metadata ]
+    properties:
+      - type: Documentation
+        url: https://www.ulisboa.pt/en/info/collective-catalog-university-lisbon
+      - type: Example
+        url: examples/catalogo-koha-oai-identify.xml
+  - aid: university-of-lisbon:identity-federation-ulisboa
+    name: Universidade de Lisboa SAML 2.0 Identity Provider (RCTSaai / eduGAIN)
+    x-operator: federation
+    x-operator-evidence: >-
+      A federation is shared by definition and the IdP behind it is the institution's.
+      The live metadata carries OrganizationName "Universidade de Lisboa" and
+      OrganizationURL www.ulisboa.pt; the eduGAIN registry records entity 852270 under
+      registration authority https://www.fccn.pt, federation code RCTSAAI, scope
+      ulisboa.pt, first seen 2022-12-27, eccs_status 1.
+    description: >-
+      The institution's central SAML 2.0 identity provider, published into the
+      Portuguese national identity federation RCTSaai (operated by FCCN) and onward to
+      eduGAIN. Live machine-readable metadata: IDPSSODescriptor, SPSSODescriptor and
+      AttributeAuthorityDescriptor; HTTP-POST and HTTP-Redirect SSO bindings; persistent
+      and transient NameID formats. Runs on NetIQ Access Manager, not Shibboleth — the
+      /idp/shibboleth path on idp.ulisboa.pt returns a Tomcat 404 — so `saml` is claimed
+      and `shibboleth` is not. This is the strongest institution-operated machine-readable
+      surface in the profile and it was missing from the June 2026 pass entirely.
+    humanURL: https://technical.edugain.org/
+    baseURL: https://id.ulisboa.pt/nidp/saml2/metadata
+    tags: [ Identity Federation, SAML, eduGAIN, RCTSaai, Single Sign-On, Metadata ]
+    properties:
+      - type: IdentityFederation
+        url: https://id.ulisboa.pt/nidp/saml2/metadata
+      - type: Authentication
+        url: authentication/university-of-lisbon-authentication.yml
+  - aid: university-of-lisbon:identity-federation-tecnico
+    name: Instituto Superior Tecnico SAML 2.0 Identity Provider (RCTSaai / eduGAIN)
+    x-operator: federation
+    x-operator-evidence: >-
+      eduGAIN entity 673215, IDPSSODescriptor "ULisboa - Instituto Superior Tecnico",
+      registration authority https://www.fccn.pt, scope tecnico.ulisboa.pt, first seen
+      2018-01-30, sirtfi_status 1. The paired service provider, eduGAIN entity 673293,
+      is "FenixEdu Tecnico Lisboa" at https://fenix.tecnico.ulisboa.pt, asserting the
+      GEANT Data Protection Code of Conduct.
+    description: >-
+      The identity provider for Instituto Superior Tecnico, federated through RCTSaai
+      into eduGAIN and asserting SIRTFI incident-response assurance — a stronger
+      security posture than the central IdP declares. Its registered service provider in
+      the same federation is the FenixEdu deployment listed above, which is how the
+      academic API's person-scoped endpoints are authenticated. The entityID is an
+      identifier, not a dereferenceable endpoint: metadata is distributed through the
+      RCTSaai and eduGAIN aggregates.
+    humanURL: https://technical.edugain.org/entities
+    baseURL: https://technical.edugain.org/api.php?action=list_entities&format=json
+    x-entity-id: https://id.tecnico.ulisboa.pt/saml
+    x-entity-id-note: >-
+      The SAML entityID is an identifier, not a dereferenceable endpoint — GET on it
+      returns 404 from nginx, verified 2026-09-01. Metadata is distributed through the
+      RCTSaai and eduGAIN aggregates, which is what baseURL points at.
+    tags: [ Identity Federation, SAML, eduGAIN, RCTSaai, SIRTFI, Single Sign-On ]
+    properties:
+      - type: IdentityFederation
+        url: https://technical.edugain.org/
+      - type: Authentication
+        url: authentication/university-of-lisbon-authentication.yml
+  - aid: university-of-lisbon:researchportal-pure
+    name: ULisboa Research Portal — Elsevier Pure tenancy
+    x-operator: tenant
+    x-operator-evidence: >-
+      CNAME TENANCY, found by DNS on 2026-09-01 and invisible to a host-based verdict:
+      researchportal.ulisboa.pt is a CNAME to ulisbon.elsevierpure.com, which is a CNAME
+      to eu.prod.elsevierpure.com. The portal's own OAI-PMH Identify returns
+      repositoryName "Pure OAI Repository" and a CERIF Service acronym of pure.atira.dk
+      with the description "This service is based on Pure." The adminEmail is
+      researchportal@ulisboa.pt — the institution's data and the institution's contact,
+      on Elsevier's contract.
+    description: >-
+      The institution's current research information system, an Elsevier Pure tenant
+      (tenant id "ulisbon") presented on a ulisboa.pt hostname. The relationship is real
+      and is recorded here; the CONTRACT is Elsevier's and is deliberately NOT saved into
+      this repository. This is precisely the surface class that caused one Figshare
+      contract to be attributed to 25 institutions in the June 2026 cohort, and here it
+      is dressed as an institution host. The Pure Web Service OpenAPI at
+      /ws/api/524/openapi.yaml returns 401 "Please provide a valid API key for access";
+      the anonymous OAI-PMH endpoint at /ws/oai is open and OpenAIRE CERIF 1.2
+      compatible, with an earliest datestamp of 2023-09-18.
+    humanURL: https://researchportal.ulisboa.pt/
+    baseURL: https://researchportal.ulisboa.pt/ws/oai
+    tags: [ Research Repository, CRIS, Pure, Elsevier, OAI-PMH, CERIF, OpenAIRE, Tenant ]
+    properties:
+      - type: ResearchRepository
+        url: https://researchportal.ulisboa.pt/
+      - type: Vendor
+        url: https://raw.githubusercontent.com/api-evangelist/elsevier/refs/heads/main/apis.yml
+      - type: Example
+        url: examples/researchportal-pure-oai-identify.xml
+  - aid: university-of-lisbon:ewp-node
+    name: Erasmus Without Paper node (HEI ulisboa.pt)
+    x-operator: tenant
+    x-operator-evidence: >-
+      HOSTLESS-ADJACENT AND EASY TO MISCREDIT: the EWP registry names the institution as
+      HEI ulisboa.pt with Erasmus code "P  LISBOA109" and PIC 949885305, but every
+      declared endpoint runs on unizoneewp.it.auth.gr — the UniZone EWP hosting service
+      of Aristotle University of Thessaloniki, admin contact ewp-plus@it.auth.gr. The
+      paths are institution-scoped (/rest/institutions/ulisboa.pt), so the tenancy is
+      real; the contract is the EWP Dashboard's.
+    description: >-
+      The institution's node in the Erasmus Without Paper network, through which student
+      mobility, inter-institutional agreements, learning agreements and transcripts move
+      between European universities machine-to-machine. Implements discovery 6.0.0,
+      institutions 2.2.0, organizational-units 2.1.1 and iia-cnr 3.0.0, with HTTP
+      signature client and server authentication. Twenty-seven endpoints are declared in
+      the registry. Notably, the institution ALSO authors an open-source EWP node
+      implementation on GitHub that it does not appear to be the operator of here.
+    humanURL: https://registry.erasmuswithoutpaper.eu/
+    baseURL: https://unizoneewp.it.auth.gr/rest/manifest/ulisboa.pt
+    tags: [ Erasmus Without Paper, Mobility, Interoperability, Tenant, Higher Education ]
+    properties:
+      - type: Documentation
+        url: https://developers.erasmuswithoutpaper.eu/
+      - type: Registry
+        url: https://registry.erasmuswithoutpaper.eu/catalogue-v1.xml
+      - type: SourceCode
+        url: https://github.com/ULisboa/ewp-node
+  - aid: university-of-lisbon:datacite-membership
+    name: DataCite repository membership (QWBT.ULISBOA)
+    x-operator: registry
+    x-operator-evidence: >-
+      api.datacite.org is an identifier registry the institution is REGISTERED IN, not a
+      vendor it bought from. Client QWBT.ULISBOA, "Universidade de Lisboa / Servicos
+      Centrais", clientType repository, created 2022-02-04, isActive true.
+    description: >-
+      An active DataCite repository client registered to the university's central
+      services for minting DOIs over the institutional repository. Recorded honestly with
+      its caveat: the DataCite DOI API returns ZERO DOIs registered under this client as
+      of 2026-09-01. The membership is real, the output is not yet. The registry's own
+      contract is not saved here and this entry is never to be deleted as a "shared host".
+    humanURL: https://commons.datacite.org/repositories/qwbt.ulisboa
+    baseURL: https://api.datacite.org/clients/qwbt.ulisboa
+    tags: [ DataCite, DOI, Registry, Persistent Identifiers, Membership ]
+    properties:
+      - type: Example
+        url: examples/datacite-client-qwbt-ulisboa.json
+      - type: Conformance
+        url: conformance/university-of-lisbon-domain-standards.yml
+  - aid: university-of-lisbon:ror-registration
+    name: ROR organization identifier
+    x-operator: registry
+    x-operator-evidence: >-
+      Research Organization Registry record https://ror.org/01c27hj86, names
+      "Universidade de Lisboa" / "University of Lisbon", domains ["ulisboa.pt"],
+      resolved from api.ror.org on 2026-09-01.
+    description: >-
+      The institution's registered ROR identifier — the canonical machine-readable
+      organizational identity used across DataCite, Crossref and OpenAIRE metadata. ROR
+      also holds records for the university's centres and schools as separate entities,
+      which is the federated shape of this institution showing up in the identifier layer.
+    humanURL: https://ror.org/01c27hj86
+    baseURL: https://api.ror.org/organizations/01c27hj86
+    tags: [ ROR, Registry, Persistent Identifiers, Organization Identity ]
+    properties:
+      - type: Conformance
+        url: conformance/university-of-lisbon-domain-standards.yml
+  - aid: university-of-lisbon:crossref-membership
+    name: Crossref memberships (organic units)
+    x-operator: registry
+    x-operator-evidence: >-
+      api.crossref.org is an identifier registry the institution's units are registered
+      in. Members resolved 2026-09-01: 28206 Faculdade de Letras; 35305 Faculdade de
+      Ciencias; 7614 Centro de Estudos Geograficos (IGOT); 26494 INET-md (FMH); 29121
+      Ophiussa, Centro de Arqueologia.
+    description: >-
+      Five ULisboa organic units hold Crossref member IDs in their own right, minting
+      DOIs for their journals independently of the rectorate. There is no single
+      institutional Crossref member — the federated-buyer pattern reproduced exactly in
+      the scholarly identifier layer. Crossref is also an enabled external metadata
+      source in the institution's own DSpace deployment.
+    humanURL: https://www.crossref.org/
+    baseURL: https://api.crossref.org/members?query=lisboa
+    tags: [ Crossref, DOI, Registry, Persistent Identifiers, Scholarly ]
+    properties:
+      - type: Conformance
+        url: conformance/university-of-lisbon-domain-standards.yml
 common:
-  - type: DomainSecurity
-    url: security/university-of-lisbon-domain-security.yml
   - type: Website
     url: https://www.ulisboa.pt/en
-  - type: GitHub
+  - type: Documentation
+    url: https://fenixedu.org/dev/api/
+  - type: APIReference
+    url: https://fenixedu.org/dev/api/
+  - type: GitHubOrganization
     url: https://github.com/ULisboa
+  - type: SourceCode
+    url: https://github.com/ULisboa/ewp-node
+  - type: CourseCatalog
+    url: https://fenix.tecnico.ulisboa.pt/api/fenix/v1/degrees
+  - type: ResearchRepository
+    url: https://repositorio.ulisboa.pt/
+  - type: LibraryCatalog
+    url: https://catalogo-bibliotecas.ulisboa.pt/
+  - type: IdentityFederation
+    url: https://id.ulisboa.pt/nidp/saml2/metadata
+  - type: AIPolicy
+    url: https://tecnico.ulisboa.pt/en/news/campus-community/tecnico-apresenta-guia-para-a-utilizacao-responsavel-da-inteligencia-artificial/
+  - type: TermsOfService
+    url: https://www.ulisboa.pt/en/info/terms-use-0
+  - type: PrivacyPolicy
+    url: https://www.ulisboa.pt/en/info/cookies-policy
+  - type: Support
+    url: https://www.ulisboa.pt/en/info/contacts-1
+  - type: BlogRSS
+    url: https://www.ulisboa.pt/en/rss.xml
   - type: LinkedIn
     url: https://www.linkedin.com/school/universidade-de-lisboa/
-  - type: SourceCode
-    url: https://github.com/ULisboa
+  - type: OpenAPI
+    url: openapi/university-of-lisbon-fenixedu-academic-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/university-of-lisbon-fenixedu-degree.json
+  - type: JSONLD
+    url: json-ld/university-of-lisbon-organization.jsonld
+  - type: Examples
+    url: examples/university-of-lisbon-examples.yml
+  - type: Authentication
+    url: authentication/university-of-lisbon-authentication.yml
+  - type: Scopes
+    url: scopes/university-of-lisbon-scopes.yml
+  - type: Errors
+    url: errors/university-of-lisbon-errors.yml
+  - type: Rules
+    url: rules/university-of-lisbon-rules.yml
+  - type: Vocabulary
+    url: vocabulary/university-of-lisbon-vocabulary.yml
+  - type: Conformance
+    url: conformance/university-of-lisbon-domain-standards.yml
+  - type: Lifecycle
+    url: lifecycle/university-of-lisbon-lifecycle.yml
+  - type: DomainSecurity
+    url: security/university-of-lisbon-domain-security.yml
   - type: Plans
     url: plans/university-of-lisbon-plans-pricing.yml
   - type: RateLimits
@@ -102,6 +415,103 @@ common:
     url: finops/university-of-lisbon-finops.yml
   - type: Review
     url: review.yml
+x-coverage:
+  state: covered
+  reason: covered
+  generated: '2026-09-01'
+  method: probed
+  detail: >-
+    Real institution-operated, machine-readable surfaces were found and verified live on
+    2026-09-01: the FenixEdu academic API on the institution's own host, two independent
+    OAI-PMH 2.0 endpoints (a 100,245-item DSpace repository running since 2002, and the
+    Koha union library catalog), the DSpace REST API, and a SAML 2.0 identity provider
+    federated through RCTSaai into eduGAIN with a second IdP for Instituto Superior
+    Tecnico. Five of the twelve education-regime domain standards are met with
+    contract-level evidence: oai-pmh, saml, orcid, datacite, crossref. What the
+    institution does NOT have is also measured rather than assumed: no central developer
+    portal, no provider-published OpenAPI anywhere (the contract in openapi/ is ours,
+    derived from probes and marked as such), no open data portal (data.ulisboa.pt and
+    dados.ulisboa.pt do not resolve; no organization on dados.gov.pt), no published OAuth
+    scope vocabulary, no /.well-known discovery, no llms.txt, no security.txt, no status
+    page, no changelog, no research-computing API. Two surfaces that read as the
+    institution's are not: researchportal.ulisboa.pt CNAMEs to ulisbon.elsevierpure.com
+    and self-identifies as a Pure OAI Repository, and the Erasmus Without Paper node runs
+    on another university's host. Both are recorded as tenancies without importing the
+    vendor's contract. Live defects observed and kept in the record rather than smoothed:
+    GET /canteen returns 500 with a Java stack trace, GET /shuttle returns an empty
+    object, and the Koha OAI Identify reports repositoryName "ULisboa - " with
+    earliestDatestamp 0001-01-01.
+  evidence:
+    - url: https://fenix.tecnico.ulisboa.pt/api/fenix/v1/about
+      status: 200
+    - url: https://fenix.tecnico.ulisboa.pt/api/fenix/v1/degrees
+      status: 200
+    - url: https://fenix.tecnico.ulisboa.pt/api/fenix/v1/domainModel
+      status: 200
+    - url: https://fenix.tecnico.ulisboa.pt/api/fenix/v1/person
+      status: 401
+    - url: https://fenix.tecnico.ulisboa.pt/api/fenix/v1/canteen
+      status: 500
+    - url: https://fenix.tecnico.ulisboa.pt/oauth/userdialog
+      status: 200
+    - url: https://fenix.tecnico.ulisboa.pt/oauth/access_token
+      status: 405
+    - url: https://repositorio.ulisboa.pt/server/oai/request?verb=Identify
+      status: 200
+    - url: https://repositorio.ulisboa.pt/server/api
+      status: 200
+    - url: https://repositorio.ulisboa.pt/server/api/integration/externalsources
+      status: 200
+    - url: https://catalogo-bibliotecas.ulisboa.pt/cgi-bin/koha/oai.pl?verb=Identify
+      status: 200
+    - url: https://catalogo-bibliotecas.ulisboa.pt/cgi-bin/koha/opac-search.pl?q=lisboa&format=rss2
+      status: 403
+    - url: https://id.ulisboa.pt/nidp/saml2/metadata
+      status: 200
+    - url: https://idp.ulisboa.pt/idp/shibboleth
+      status: 404
+    - url: https://technical.edugain.org/api.php?action=list_entities&format=json
+      status: 200
+    - url: https://researchportal.ulisboa.pt/ws/oai?verb=Identify
+      status: 200
+    - url: https://researchportal.ulisboa.pt/ws/api/524/openapi.yaml
+      status: 401
+    - url: https://registry.erasmuswithoutpaper.eu/catalogue-v1.xml
+      status: 200
+    - url: https://api.datacite.org/clients/qwbt.ulisboa
+      status: 200
+    - url: https://api.datacite.org/dois?client-id=qwbt.ulisboa
+      status: 200
+    - url: https://api.ror.org/organizations?query=%22Universidade%20de%20Lisboa%22
+      status: 200
+    - url: https://api.crossref.org/members?query=lisboa
+      status: 200
+    - url: https://commons.datacite.org/repositories/qwbt.ulisboa
+      status: 429
+      note: >-
+        DataCite Commons rate-limits our address across the whole host, root included.
+        Graded live-but-throttled, not dead; the machine-readable record at
+        api.datacite.org returns 200.
+    - url: https://api.github.com/orgs/ULisboa/repos
+      status: 200
+    - url: https://dados.gov.pt/api/1/organizations/?q=Lisboa
+      status: 200
+    - url: https://www.ulisboa.pt/en
+      status: 200
+    - url: https://www.ulisboa.pt/en/rss.xml
+      status: 200
+    - url: https://www.ulisboa.pt/llms.txt
+      status: 404
+    - url: https://www.ulisboa.pt/.well-known/security.txt
+      status: 404
+    - url: https://data.ulisboa.pt/
+      status: 0
+    - url: https://dados.ulisboa.pt/
+      status: 0
+    - url: https://api.ulisboa.pt/
+      status: 0
+    - url: https://www.linkedin.com/school/universidade-de-lisboa/
+      status: 999
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
