@@ -2,25 +2,29 @@
   "repo": "university-of-lisbon",
   "feeds": [
     {
-      "source": "https://www.ulisboa.pt/en",
-      "feed_url": "https://www.ulisboa.pt/en",
-      "title": "University of Lisbon",
-      "saved": 0,
-      "method": "none",
-      "error": "parse_failed"
+      "source": "https://www.ulisboa.pt/en/info/contacts-1",
+      "feed_url": "https://www.ulisboa.pt/rss.xml",
+      "title": "",
+      "saved": 9,
+      "method": "discovered"
     },
     {
-      "source": "https://tecnico.ulisboa.pt/pt/noticias/",
+      "source": "https://www.ulisboa.pt/en",
+      "feed_url": "https://www.ulisboa.pt/rss.xml",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
+    },
+    {
+      "source": "https://tecnico.ulisboa.pt/pt/noticias/rss",
       "feed_url": "https://tecnico.ulisboa.pt/pt/noticias/rss",
-      "title": "Instituto Superior Tecnico Noticias",
-      "saved": 6,
-      "method": "rss",
-      "nature": "undetermined",
-      "nature_basis": null
+      "title": "",
+      "saved": 0,
+      "method": "feed"
     }
   ],
-  "post_count": 81,
-  "fetched": "2026-08-30T22:05:13Z",
+  "post_count": 102,
+  "fetched": "2026-09-06T19:17:18Z",
   "feed_nature": "undetermined",
   "feed_nature_basis": null,
   "feed_nature_note": "Whether these posts are the vendor publishing or its support community, decided on the URL path grammar of the saved posts -- not the hostname, which carries both on Khoros, and not author diversity, which flags large vendor blogs as forums. 'undetermined' means undetermined."
