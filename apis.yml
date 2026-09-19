@@ -147,6 +147,13 @@ apis:
   baseURL: https://catalogo-bibliotecas.ulisboa.pt/cgi-bin/koha/oai.pl
   tags:
   - Library
+  - Library Catalog
+  - OAI-PMH
+  - MARC21
+  - Koha
+  - Metadata
+  tags_raw:
+  - Library
   - LibraryCatalog
   - OAI-PMH
   - MARC21
@@ -176,6 +183,13 @@ apis:
   humanURL: https://technical.edugain.org/
   baseURL: https://id.ulisboa.pt/nidp/saml2/metadata
   tags:
+  - Identity Federation
+  - SAML
+  - eduGAIN
+  - RCTSaai
+  - SSO
+  - Metadata
+  tags_raw:
   - Identity Federation
   - SAML
   - eduGAIN
@@ -214,6 +228,13 @@ apis:
   - eduGAIN
   - RCTSaai
   - SIRTFI
+  - SSO
+  tags_raw:
+  - Identity Federation
+  - SAML
+  - eduGAIN
+  - RCTSaai
+  - SIRTFI
   - Single Sign-On
   properties:
   - type: IdentityFederation
@@ -240,6 +261,15 @@ apis:
   humanURL: https://researchportal.ulisboa.pt/
   baseURL: https://researchportal.ulisboa.pt/ws/oai
   tags:
+  - Research Repository
+  - CRI
+  - Pure
+  - Elsevier
+  - OAI-PMH
+  - CERIF
+  - OpenAIRE
+  - Tenants
+  tags_raw:
   - Research Repository
   - CRIS
   - Pure
@@ -274,6 +304,12 @@ apis:
   humanURL: https://registry.erasmuswithoutpaper.eu/
   baseURL: https://unizoneewp.it.auth.gr/rest/manifest/ulisboa.pt
   tags:
+  - Erasmus Without Paper
+  - Mobility
+  - Interoperability
+  - Tenants
+  - Higher Education
+  tags_raw:
   - Erasmus Without Paper
   - Mobility
   - Interoperability
@@ -442,6 +478,8 @@ apis:
   humanURL: https://fenixedu.org/dev/api/
   baseURL: https://fenix.tecnico.ulisboa.pt/api/fenix/v1
   tags:
+  - institution
+  tags_raw:
   - Institution
   properties:
   - type: OpenAPI
@@ -462,6 +500,8 @@ apis:
   humanURL: https://fenixedu.org/dev/api/
   baseURL: https://fenix.tecnico.ulisboa.pt/api/fenix/v1
   tags:
+  - Persons
+  tags_raw:
   - Person
   properties:
   - type: OpenAPI
@@ -482,6 +522,8 @@ apis:
   humanURL: https://fenixedu.org/dev/api/
   baseURL: https://fenix.tecnico.ulisboa.pt/api/fenix/v1
   tags:
+  - Space
+  tags_raw:
   - Spaces
   properties:
   - type: OpenAPI
