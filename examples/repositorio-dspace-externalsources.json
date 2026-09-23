@@ -1,0 +1,227 @@
+{
+  "_embedded" : {
+    "externalsources" : [ {
+      "id" : "CienciaVitaeCurriculum",
+      "name" : "CienciaVitaeCurriculum",
+      "hierarchical" : false,
+      "type" : "externalsource",
+      "_links" : {
+        "entityTypes" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/CienciaVitaeCurriculum/entityTypes"
+        },
+        "self" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/CienciaVitaeCurriculum"
+        },
+        "entries" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/CienciaVitaeCurriculum/entries"
+        }
+      }
+    }, {
+      "id" : "openAIREFunding",
+      "name" : "openAIREFunding",
+      "hierarchical" : false,
+      "type" : "externalsource",
+      "_links" : {
+        "entityTypes" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/openAIREFunding/entityTypes"
+        },
+        "self" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/openAIREFunding"
+        },
+        "entries" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/openAIREFunding/entries"
+        }
+      }
+    }, {
+      "id" : "renates",
+      "name" : "renates",
+      "hierarchical" : false,
+      "type" : "externalsource",
+      "_links" : {
+        "entityTypes" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/renates/entityTypes"
+        },
+        "self" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/renates"
+        },
+        "entries" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/renates/entries"
+        }
+      }
+    }, {
+      "id" : "sherpaJournalIssn",
+      "name" : "sherpaJournalIssn",
+      "hierarchical" : false,
+      "type" : "externalsource",
+      "_links" : {
+        "entityTypes" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/sherpaJournalIssn/entityTypes"
+        },
+        "self" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/sherpaJournalIssn"
+        },
+        "entries" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/sherpaJournalIssn/entries"
+        }
+      }
+    }, {
+      "id" : "sherpaJournal",
+      "name" : "sherpaJournal",
+      "hierarchical" : false,
+      "type" : "externalsource",
+      "_links" : {
+        "entityTypes" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/sherpaJournal/entityTypes"
+        },
+        "self" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/sherpaJournal"
+        },
+        "entries" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/sherpaJournal/entries"
+        }
+      }
+    }, {
+      "id" : "sherpaPublisher",
+      "name" : "sherpaPublisher",
+      "hierarchical" : false,
+      "type" : "externalsource",
+      "_links" : {
+        "entityTypes" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/sherpaPublisher/entityTypes"
+        },
+        "self" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/sherpaPublisher"
+        },
+        "entries" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/sherpaPublisher/entries"
+        }
+      }
+    }, {
+      "id" : "orcid",
+      "name" : "orcid",
+      "hierarchical" : false,
+      "type" : "externalsource",
+      "_links" : {
+        "entityTypes" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/orcid/entityTypes"
+        },
+        "self" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/orcid"
+        },
+        "entries" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/orcid/entries"
+        }
+      }
+    }, {
+      "id" : "datacite",
+      "name" : "datacite",
+      "hierarchical" : false,
+      "type" : "externalsource",
+      "_links" : {
+        "entityTypes" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/datacite/entityTypes"
+        },
+        "self" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/datacite"
+        },
+        "entries" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/datacite/entries"
+        }
+      }
+    }, {
+      "id" : "crossref",
+      "name" : "crossref",
+      "hierarchical" : false,
+      "type" : "externalsource",
+      "_links" : {
+        "entityTypes" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/crossref/entityTypes"
+        },
+        "self" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/crossref"
+        },
+        "entries" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/crossref/entries"
+        }
+      }
+    }, {
+      "id" : "orcidWorks",
+      "name" : "orcidWorks",
+      "hierarchical" : false,
+      "type" : "externalsource",
+      "_links" : {
+        "entityTypes" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/orcidWorks/entityTypes"
+        },
+        "self" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/orcidWorks"
+        },
+        "entries" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/orcidWorks/entries"
+        }
+      }
+    }, {
+      "id" : "pubmed",
+      "name" : "pubmed",
+      "hierarchical" : false,
+      "type" : "externalsource",
+      "_links" : {
+        "entityTypes" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/pubmed/entityTypes"
+        },
+        "self" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/pubmed"
+        },
+        "entries" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/pubmed/entries"
+        }
+      }
+    }, {
+      "id" : "arxiv",
+      "name" : "arxiv",
+      "hierarchical" : false,
+      "type" : "externalsource",
+      "_links" : {
+        "entityTypes" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/arxiv/entityTypes"
+        },
+        "self" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/arxiv"
+        },
+        "entries" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/arxiv/entries"
+        }
+      }
+    }, {
+      "id" : "scielo",
+      "name" : "scielo",
+      "hierarchical" : false,
+      "type" : "externalsource",
+      "_links" : {
+        "entityTypes" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/scielo/entityTypes"
+        },
+        "self" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/scielo"
+        },
+        "entries" : {
+          "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/scielo/entries"
+        }
+      }
+    } ]
+  },
+  "_links" : {
+    "self" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources?size=50"
+    },
+    "search" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources/search"
+    }
+  },
+  "page" : {
+    "size" : 50,
+    "totalElements" : 13,
+    "totalPages" : 1,
+    "number" : 0
+  }
+}

@@ -1,4 +1,11 @@
 {
+  "x-provenance": {
+    "generated": "2026-06-03",
+    "reviewed": "2026-09-01",
+    "method": "generated",
+    "source": "none — no provider-published context exists",
+    "note": "Written by API Evangelist, not by Universidade de Lisboa. The prefix https://www.ulisboa.pt/vocab# is a local coinage used to give the FenixEdu terms stable names inside this repository; the institution publishes no such namespace and that URL does not resolve. Treat every ulisboa: term as ours, and only the schema: terms as standard."
+  },
   "@context": {
     "schema": "https://schema.org/",
     "ulisboa": "https://www.ulisboa.pt/vocab#",
@@ -14,17 +21,14 @@
     "foundingDate": "schema:foundingDate",
     "department": "schema:department",
     "subOrganization": "schema:subOrganization",
-
     "Organization": "schema:CollegeOrUniversity",
     "institution": {
       "@id": "ulisboa:institution",
       "@type": "schema:CollegeOrUniversity"
     },
-
     "api": "ulisboa:api",
     "baseURL": "ulisboa:baseURL",
     "humanURL": "ulisboa:humanURL",
-
     "AcademicTerm": "ulisboa:AcademicTerm",
     "academicTerm": "ulisboa:academicTerm",
     "Degree": "ulisboa:Degree",
@@ -39,7 +43,6 @@
     "competences": "ulisboa:competences",
     "teachers": "ulisboa:teachers",
     "campus": "ulisboa:campus",
-
     "Space": "ulisboa:Space",
     "space": {
       "@id": "ulisboa:space",
@@ -50,7 +53,6 @@
     "containedSpaces": "ulisboa:containedSpaces",
     "parentSpace": "ulisboa:parentSpace",
     "capacity": "ulisboa:capacity",
-
     "Person": "schema:Person",
     "person": {
       "@id": "ulisboa:person",
@@ -58,7 +60,6 @@
     },
     "roles": "ulisboa:roles",
     "username": "ulisboa:username",
-
     "Repository": "ulisboa:Repository",
     "repository": {
       "@id": "ulisboa:repository",

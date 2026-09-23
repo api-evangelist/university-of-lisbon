@@ -1,0 +1,72 @@
+---
+name: University of Lisbon — Vocabulary
+generated: '2026-09-01'
+method: derived
+source:
+  - openapi/university-of-lisbon-fenixedu-academic-api-openapi.yml
+  - https://fenix.tecnico.ulisboa.pt/api/fenix/v1/domainModel
+  - https://repositorio.ulisboa.pt/server/oai/request?verb=Identify
+note: >-
+  Derived by API Evangelist from the probed contracts and from the institution's own
+  serialized domain model. The provider publishes no vocabulary document. Terms below
+  appear in a machine-readable payload that was actually retrieved.
+terms:
+  - term: academicTerm
+    definition: >-
+      A teaching period, rendered as "2025/2026" for an academic year and as
+      "1º Semestre 2026/2027" for a semester within one. The query parameter form and the
+      /about form are NOT the same string shape; a client that round-trips
+      about.currentAcademicTerm into ?academicTerm= will fail.
+    source: GET /about, GET /academicterms, ?academicTerm= on /degrees
+  - term: degree
+    definition: >-
+      A named programme of study with an acronym, a type (Licenciatura, Mestrado,
+      Diploma de Estudos Avançados, Programa Doutoral), one or more campuses and a list
+      of academic terms in which it ran.
+    source: GET /degrees, GET /degrees/{id}
+  - term: course
+    definition: A course unit inside a degree for one academic term, with a schedule, groups, evaluations and enrolled students.
+    source: GET /degrees/{id}/courses, GET /courses/{id}
+  - term: space
+    definition: >-
+      A physical location in the estate, nesting recursively through containedSpaces.
+      Observed type values CAMPUS, BUILDING, FLOOR, ROOM. Campuses observed: Alameda,
+      Tecnológico e Nuclear, Taguspark.
+    source: GET /spaces, GET /spaces/{id}
+  - term: blueprint
+    definition: A floor-plan raster image for a space, served as image/jpeg from the space resource.
+    source: GET /spaces/{id}/blueprint
+  - term: istId
+    definition: >-
+      Instituto Superior Técnico personal identifier, rendered as "ist" followed by
+      digits. A person identifier, and one of the reasons degree payloads carry personal
+      data.
+    source: degrees[].teachers[].istId
+  - term: domainModel
+    definition: >-
+      A 1.2 MB serialized description of the FenixEdu object model — class names,
+      superclasses, interfaces, modifiers and relations — served anonymously. Unusual and
+      genuinely useful: the institution exposes its own internal schema graph.
+    source: GET /domainModel
+  - term: organic unit (unidade orgânica)
+    definition: >-
+      A school, faculty or institute of the university. ULisboa has 18 plus the National
+      Museum of Natural History and Science. Organic units hold their own systems, their
+      own Crossref member IDs and their own AI guidance, which is why the institution's
+      programmable footprint is federated rather than central.
+    source: https://www.ulisboa.pt/en/info/collective-catalog-university-lisbon
+  - term: RCAAP
+    definition: >-
+      Repositórios Científicos de Acesso Aberto de Portugal, the national open-access
+      repository programme run by FCT/FCCN that the ULisboa repository is part of.
+    source: DataCite client QWBT.ULISBOA description
+  - term: RCTSaai
+    definition: >-
+      The Portuguese national identity federation operated by FCCN, registration
+      authority https://www.fccn.pt, through which ULisboa publishes its IdP to eduGAIN.
+    source: https://technical.edugain.org/api.php?action=list_entities&format=json
+  - term: HEI ID
+    definition: >-
+      Erasmus Without Paper higher-education-institution identifier. ULisboa's is
+      ulisboa.pt, alongside Erasmus code P LISBOA109 and PIC 949885305.
+    source: https://registry.erasmuswithoutpaper.eu/catalogue-v1.xml

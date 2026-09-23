@@ -1,0 +1,47 @@
+---
+name: University of Lisbon — Error Contract
+generated: '2026-09-01'
+method: probed
+source:
+  - https://fenix.tecnico.ulisboa.pt/api/fenix/v1/courses/1
+  - https://fenix.tecnico.ulisboa.pt/api/fenix/v1/person
+  - https://fenix.tecnico.ulisboa.pt/api/fenix/v1/canteen
+note: >-
+  Written by API Evangelist from deliberate failing probes on 2026-09-01. The provider
+  publishes no error reference. There are TWO incompatible error envelopes on the same
+  API and no problem+json anywhere.
+envelopes:
+  - name: resource error
+    media_type: application/json;charset=utf-8
+    shape:
+      error: string
+      description: string
+    observed:
+      request: GET /api/fenix/v1/courses/1
+      status: 404
+      body: '{"error":"id not found","description":"id not found"}'
+  - name: oauth error
+    media_type: application/json
+    shape:
+      error: string
+      error_description: string
+    observed:
+      request: GET /api/fenix/v1/person
+      status: 401
+      body: '{"error":"accessTokenInvalidFormat","error_description":"Access Token not recognized."}'
+defects_observed:
+  - request: GET /api/fenix/v1/canteen
+    status: 500
+    finding: >-
+      A documented public endpoint returns HTTP 500 with a Java stack trace in the
+      response body, leaking internal class names and framework versions. Observed
+      2026-09-01. Recorded as a live defect of a live endpoint, not as a missing one.
+  - request: GET /api/fenix/v1/shuttle
+    status: 200
+    finding: >-
+      Returns an empty JSON object rather than a documented empty-state representation.
+      An agent cannot distinguish "no shuttle today" from "feature disabled".
+missing:
+  - No RFC 9457 / application/problem+json representation on any endpoint.
+  - No error code vocabulary or error reference page.
+  - No Retry-After, no documented rate-limit error.

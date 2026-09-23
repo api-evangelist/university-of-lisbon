@@ -1,0 +1,95 @@
+---
+name: University of Lisbon — Authentication
+generated: '2026-09-01'
+method: probed
+source:
+  - https://fenix.tecnico.ulisboa.pt/oauth/userdialog
+  - https://fenix.tecnico.ulisboa.pt/oauth/access_token
+  - https://fenix.tecnico.ulisboa.pt/api/fenix/v1/person
+  - https://id.ulisboa.pt/nidp/saml2/metadata
+  - https://repositorio.ulisboa.pt/server/api
+note: >-
+  Written by API Evangelist from live probes on 2026-09-01. Universidade de Lisboa
+  publishes no consolidated authentication document.
+surfaces:
+  - surface: FenixEdu Academic API (Instituto Superior Tecnico)
+    x-operator: institution
+    anonymous_access: true
+    anonymous_scope: >-
+      Institution metadata, academic terms, contacts, the degree and course catalog,
+      campus spaces and blueprints, parking, canteen, shuttle and the serialized
+      domain model are all readable with no credential. Probed 2026-09-01: GET /about,
+      /academicterms, /degrees, /degrees/{id}, /spaces, /spaces/{id}, /parking,
+      /contacts, /domainModel all returned 200 with no Authorization header.
+    scheme: OAuth 2.0 authorization code
+    implementation: Bennu OAuth, copyright Instituto Superior Tecnico, shipped with FenixEdu
+    authorization_url: https://fenix.tecnico.ulisboa.pt/oauth/userdialog
+    token_url: https://fenix.tecnico.ulisboa.pt/oauth/access_token
+    evidence:
+      - url: https://fenix.tecnico.ulisboa.pt/oauth/userdialog
+        status: 200
+        note: Returns the Bennu OAuth consent dialog carrying an Instituto Superior Tecnico copyright header.
+      - url: https://fenix.tecnico.ulisboa.pt/oauth/access_token
+        status: 405
+        note: Method Not Allowed on GET — the token endpoint exists and accepts POST only.
+      - url: https://fenix.tecnico.ulisboa.pt/api/fenix/v1/person
+        status: 401
+        note: 'Unauthenticated call returns {"error":"accessTokenInvalidFormat"}.'
+    onboarding: >-
+      Application registration requires an authenticated Instituto Superior Tecnico
+      account. There is no self-service developer signup open to the public, and no
+      published application-review or rate-limit policy.
+    token_transport: Bearer access token
+    scopes_published: false
+    scopes_note: >-
+      Access scopes are chosen per registered application inside FenixEdu rather than
+      enumerated in any machine-readable or public document. No scope names are
+      asserted here — see scopes/university-of-lisbon-scopes.yml.
+  - surface: Universidade de Lisboa SAML 2.0 identity provider
+    x-operator: institution
+    scheme: SAML 2.0 Web Browser SSO
+    entity_id: https://id.ulisboa.pt/nidp/saml2/metadata
+    metadata_url: https://id.ulisboa.pt/nidp/saml2/metadata
+    federation: RCTSaai (FCCN), published onward to eduGAIN
+    bindings:
+      - urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST
+      - urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect
+    name_id_formats:
+      - urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
+      - urn:oasis:names:tc:SAML:2.0:nameid-format:transient
+    roles: [IDPSSODescriptor, SPSSODescriptor, AttributeAuthorityDescriptor]
+    scope: ulisboa.pt
+    evidence:
+      - url: https://id.ulisboa.pt/nidp/saml2/metadata
+        status: 200
+        note: >-
+          Live SAML 2.0 EntityDescriptor. OrganizationName "Universidade de Lisboa",
+          OrganizationURL www.ulisboa.pt.
+  - surface: Instituto Superior Tecnico SAML 2.0 identity provider
+    x-operator: institution
+    scheme: SAML 2.0 Web Browser SSO
+    entity_id: https://id.tecnico.ulisboa.pt/saml
+    federation: RCTSaai (FCCN), published onward to eduGAIN
+    scope: tecnico.ulisboa.pt
+    assurance: SIRTFI asserted in the eduGAIN registry record
+    evidence:
+      - url: https://technical.edugain.org/api.php?action=list_entities&format=json
+        status: 200
+        note: >-
+          eduGAIN entity 673215, IDPSSODescriptor, registration authority
+          https://www.fccn.pt, first seen 2018-01-30, eccs_status 1, sirtfi_status 1.
+    caveat: >-
+      The entityID is an identifier, not a dereferenceable endpoint; GET on it returns
+      404 from nginx. Metadata is distributed through the RCTSaai and eduGAIN
+      aggregates, not from this URL.
+  - surface: Repositorio ULisboa (DSpace 7.6.1)
+    x-operator: institution
+    anonymous_access: true
+    anonymous_scope: >-
+      The full REST and OAI-PMH read surface is anonymous. Probed 2026-09-01:
+      GET /server/api and GET /server/api/core/communities both 200.
+    scheme: Session token plus OIDC/SAML login for deposit and administration
+    evidence:
+      - url: https://repositorio.ulisboa.pt/server/api
+        status: 200
+        note: HAL root advertises authn, authorizations, oidc and groups endpoints.

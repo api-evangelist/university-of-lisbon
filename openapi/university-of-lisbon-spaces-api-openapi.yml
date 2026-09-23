@@ -1,0 +1,154 @@
+openapi: 3.2.0
+info:
+  title: FenixEdu Academic API — Instituto Superior Tecnico…
+  version: v1
+  summary: Public academic, campus and campus-life API of the FenixEdu academic information system operated by Instituto Superior Tecnico.
+  description: Public REST API of FenixEdu, the academic information system operated by Instituto Superior Tecnico (IST), a school of the Universidade de Lisboa.
+  contact:
+    name: Instituto Superior Tecnico — Universidade de Lisboa
+    url: https://tecnico.ulisboa.pt/
+    email: mail@tecnico.ulisboa.pt
+  license:
+    name: Not stated by the provider
+  termsOfService: https://www.ulisboa.pt/en/info/terms-use-0
+  x-operator: institution
+  x-operator-evidence: Host fenix.tecnico.ulisboa.pt is under the institution's own registrable domain ulisboa.pt; /about returns institutionName "Instituto Superior Tecnico" and institutionUrl https://tecnico.ulisboa.pt/; the OAuth dialog at /oauth/userdialog carries an Instituto Superior Tecnico copyright notice. No vendor name appears in servers[], info.title, info.contact or the served payloads.
+  x-provenance:
+    generated: '2026-09-01'
+    method: probed
+    source:
+    - https://fenix.tecnico.ulisboa.pt/api/fenix/v1/about
+    - https://fenixedu.org/dev/api/
+    note: Derived by API Evangelist from live probes and the provider's own human documentation. Not published by Universidade de Lisboa or by Instituto Superior Tecnico.
+servers:
+- url: https://fenix.tecnico.ulisboa.pt/api/fenix/v1
+  description: Production — Instituto Superior Tecnico, Universidade de Lisboa
+tags:
+- name: Spaces
+  description: Campuses, buildings, floors and rooms, including blueprints.
+paths:
+  /spaces:
+    get:
+      tags:
+      - Spaces
+      operationId: listSpaces
+      summary: Top-level campuses
+      security: []
+      x-probe:
+        date: '2026-09-01'
+        status: 200
+        content_type: application/json
+      responses:
+        '200':
+          description: Campus list.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SpaceSummary'
+              examples:
+                live:
+                  externalValue: ../examples/fenixedu-spaces.json
+  /spaces/{id}:
+    get:
+      tags:
+      - Spaces
+      operationId: getSpace
+      summary: One space, with the spaces it contains
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/id'
+      x-probe:
+        date: '2026-09-01'
+        status: 200
+        content_type: application/json
+      responses:
+        '200':
+          description: Space record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Space'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /spaces/{id}/blueprint:
+    get:
+      tags:
+      - Spaces
+      operationId: getSpaceBlueprint
+      summary: Floor-plan blueprint for a space
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/id'
+      x-probe:
+        date: '2026-09-01'
+        status: 200
+        content_type: image/jpeg
+      responses:
+        '200':
+          description: Blueprint image.
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+components:
+  schemas:
+    SpaceSummary:
+      type: object
+      required:
+      - id
+      - name
+      - type
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          description: Observed values include CAMPUS, BUILDING, FLOOR and ROOM.
+    Space:
+      allOf:
+      - $ref: '#/components/schemas/SpaceSummary'
+      - type: object
+        properties:
+          containedSpaces:
+            type: array
+            items:
+              $ref: '#/components/schemas/SpaceSummary'
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        description:
+          type: string
+  responses:
+    NotFound:
+      description: No resource with the supplied identifier. Observed 2026-09-01.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            live:
+              externalValue: ../examples/fenixedu-error-404.json
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: FenixEdu external identifier of the resource.
+      schema:
+        type: string
+  securitySchemes:
+    fenixOAuth:
+      type: oauth2
+      description: Bennu OAuth 2.0, the authorization layer shipped with FenixEdu and copyrighted by Instituto Superior Tecnico. Applications are registered by an authenticated member of the institution; the access scopes granted are chosen per application at registration time and are not enumerated in a machine-readable document, so no scope names are asserted here.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://fenix.tecnico.ulisboa.pt/oauth/userdialog
+          tokenUrl: https://fenix.tecnico.ulisboa.pt/oauth/access_token
+          scopes: {}

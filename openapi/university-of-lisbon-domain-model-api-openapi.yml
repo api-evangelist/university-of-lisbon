@@ -1,0 +1,63 @@
+openapi: 3.2.0
+info:
+  title: FenixEdu Academic API — Instituto Superior Tecnico…
+  version: v1
+  summary: Public academic, campus and campus-life API of the FenixEdu academic information system operated by Instituto Superior Tecnico.
+  description: Public REST API of FenixEdu, the academic information system operated by Instituto Superior Tecnico (IST), a school of the Universidade de Lisboa.
+  contact:
+    name: Instituto Superior Tecnico — Universidade de Lisboa
+    url: https://tecnico.ulisboa.pt/
+    email: mail@tecnico.ulisboa.pt
+  license:
+    name: Not stated by the provider
+  termsOfService: https://www.ulisboa.pt/en/info/terms-use-0
+  x-operator: institution
+  x-operator-evidence: Host fenix.tecnico.ulisboa.pt is under the institution's own registrable domain ulisboa.pt; /about returns institutionName "Instituto Superior Tecnico" and institutionUrl https://tecnico.ulisboa.pt/; the OAuth dialog at /oauth/userdialog carries an Instituto Superior Tecnico copyright notice. No vendor name appears in servers[], info.title, info.contact or the served payloads.
+  x-provenance:
+    generated: '2026-09-01'
+    method: probed
+    source:
+    - https://fenix.tecnico.ulisboa.pt/api/fenix/v1/about
+    - https://fenixedu.org/dev/api/
+    note: Derived by API Evangelist from live probes and the provider's own human documentation. Not published by Universidade de Lisboa or by Instituto Superior Tecnico.
+servers:
+- url: https://fenix.tecnico.ulisboa.pt/api/fenix/v1
+  description: Production — Instituto Superior Tecnico, Universidade de Lisboa
+tags:
+- name: Domain Model
+  description: Serialized FenixEdu domain model.
+paths:
+  /domainModel:
+    get:
+      tags:
+      - Domain Model
+      operationId: getDomainModel
+      summary: Serialized FenixEdu domain model — classes, superclasses, interfaces and…
+      security: []
+      x-probe:
+        date: '2026-09-01'
+        status: 200
+        content_type: application/json
+        bytes: 1284290
+      responses:
+        '200':
+          description: Domain model description.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  classes:
+                    type: array
+                    items:
+                      type: object
+components:
+  securitySchemes:
+    fenixOAuth:
+      type: oauth2
+      description: Bennu OAuth 2.0, the authorization layer shipped with FenixEdu and copyrighted by Instituto Superior Tecnico. Applications are registered by an authenticated member of the institution; the access scopes granted are chosen per application at registration time and are not enumerated in a machine-readable document, so no scope names are asserted here.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://fenix.tecnico.ulisboa.pt/oauth/userdialog
+          tokenUrl: https://fenix.tecnico.ulisboa.pt/oauth/access_token
+          scopes: {}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd https://www.openaire.eu/cerif-profile/1.2/ https://www.openaire.eu/schema/cris/1.2/openaire-cerif-profile.xsd">
+  <responseDate>2026-09-01T21:09:22Z</responseDate>
+  <request verb="Identify">https://researchportal.ulisboa.pt/ws/oai</request>
+  <Identify>
+    <repositoryName>Pure OAI Repository</repositoryName>
+    <baseURL>https://researchportal.ulisboa.pt/ws/oai</baseURL>
+    <protocolVersion>2.0</protocolVersion>
+    <adminEmail>researchportal@ulisboa.pt</adminEmail>
+    <earliestDatestamp>2023-09-18T18:05:55Z</earliestDatestamp>
+    <deletedRecord>no</deletedRecord>
+    <granularity>YYYY-MM-DDThh:mm:ssZ</granularity>
+    <description>
+      <Service xmlns="https://www.openaire.eu/cerif-profile/1.2/" id="pure.atira.dk">
+        <Compatibility xmlns="https://www.openaire.eu/cerif-profile/vocab/OpenAIRE_Service_Compatibility">https://www.openaire.eu/cerif-profile/vocab/OpenAIRE_Service_Compatibility#1.2</Compatibility>
+        <Acronym>pure.atira.dk</Acronym>
+        <Name xml:lang="en">Pure OAI Repository</Name>
+        <Description xml:lang="en">This service is based on Pure.</Description>
+        <WebsiteURL>https://researchportal.ulisboa.pt/portal</WebsiteURL>
+        <OAIPMHBaseURL>https://researchportal.ulisboa.pt/ws/oai</OAIPMHBaseURL>
+      </Service>
+    </description>
+  </Identify>
+</OAI-PMH>

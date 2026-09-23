@@ -1,0 +1,35 @@
+---
+name: University of Lisbon — Access Scopes
+generated: '2026-09-01'
+method: probed
+source:
+  - https://fenix.tecnico.ulisboa.pt/oauth/userdialog
+  - https://fenixedu.org/dev/api/
+note: >-
+  Written by API Evangelist. This file records an ABSENCE that was measured, not a
+  scope list. No scope names are invented here.
+published_scopes: none
+finding: >-
+  The FenixEdu deployment at Instituto Superior Tecnico runs Bennu OAuth 2.0 with a
+  working authorization and token endpoint, but it publishes no scope vocabulary. The
+  consent dialog at /oauth/userdialog renders per registered application, the human
+  documentation at fenixedu.org/dev/api/ names no scope strings, and there is no
+  discovery document — probed 2026-09-01, no /.well-known/oauth-authorization-server
+  and no /.well-known/openid-configuration under the API host. Consequently
+  components.securitySchemes.fenixOAuth.flows.authorizationCode.scopes in
+  openapi/university-of-lisbon-fenixedu-academic-api-openapi.yml is deliberately an
+  empty object rather than a guessed list.
+access_boundaries_observed:
+  - boundary: anonymous
+    description: >-
+      Institutional metadata, academic terms, contacts, degree and course catalog,
+      campus spaces and blueprints, parking, canteen, shuttle, serialized domain model.
+    evidence: 9 endpoints probed 2026-09-01, all 200 with no Authorization header.
+  - boundary: person-scoped, token required
+    description: >-
+      Personal profile, course enrolments, curriculum, class and evaluation calendars,
+      evaluation enrolment, tuition and payment records.
+    evidence:
+      url: https://fenix.tecnico.ulisboa.pt/api/fenix/v1/person
+      status: 401
+      body: '{"error":"accessTokenInvalidFormat","error_description":"Access Token not recognized."}'

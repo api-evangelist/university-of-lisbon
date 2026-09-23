@@ -1,0 +1,588 @@
+openapi: 3.1.0
+info:
+  title: FenixEdu Academic API — Instituto Superior Tecnico, Universidade de Lisboa
+  version: v1
+  summary: Public academic, campus and campus-life API of the FenixEdu academic information system operated by Instituto Superior Tecnico.
+  description: >-
+    Public REST API of FenixEdu, the academic information system operated by Instituto
+    Superior Tecnico (IST), a school of the Universidade de Lisboa. FenixEdu is
+    institution-authored open-source software — the OAuth layer served by this
+    deployment carries the notice "Copyright (c) 2015 Instituto Superior Tecnico ...
+    Bennu OAuth" — and this deployment runs on the institution's own registrable
+    domain, ulisboa.pt. Both the software and the host are the institution's, which is
+    why this contract is recorded with x-operator: institution rather than as a vendor
+    contract running under the institution's name.
+
+    Anonymous endpoints expose institutional metadata, the degree catalog, the course
+    catalog, campus spaces and building blueprints, academic terms, institutional
+    contacts, parking, canteen and shuttle information, plus a full serialized domain
+    model. Person-scoped endpoints (curriculum, enrolments, evaluations, calendars,
+    payments) require an OAuth 2.0 access token issued to a registered application by
+    an authenticated member of the institution.
+
+    NOT WRITTEN BY THE PROVIDER. This document was derived by API Evangelist from live
+    probes against the running service on 2026-09-01 plus the human documentation at
+    https://fenixedu.org/dev/api/. Every path listed here was either called directly
+    (status code recorded in x-probe) or is documented on that page; response schemas
+    are induced from real captured payloads in ../examples/. No endpoint, field,
+    parameter or scope has been invented.
+  contact:
+    name: Instituto Superior Tecnico — Universidade de Lisboa
+    url: https://tecnico.ulisboa.pt/
+    email: mail@tecnico.ulisboa.pt
+  license:
+    name: Not stated by the provider
+  termsOfService: https://www.ulisboa.pt/en/info/terms-use-0
+  x-operator: institution
+  x-operator-evidence: >-
+    Host fenix.tecnico.ulisboa.pt is under the institution's own registrable domain
+    ulisboa.pt; /about returns institutionName "Instituto Superior Tecnico" and
+    institutionUrl https://tecnico.ulisboa.pt/; the OAuth dialog at /oauth/userdialog
+    carries an Instituto Superior Tecnico copyright notice. No vendor name appears in
+    servers[], info.title, info.contact or the served payloads.
+  x-provenance:
+    generated: '2026-09-01'
+    method: probed
+    source:
+      - https://fenix.tecnico.ulisboa.pt/api/fenix/v1/about
+      - https://fenixedu.org/dev/api/
+    note: >-
+      Derived by API Evangelist from live probes and the provider's own human
+      documentation. Not published by Universidade de Lisboa or by Instituto Superior
+      Tecnico.
+servers:
+  - url: https://fenix.tecnico.ulisboa.pt/api/fenix/v1
+    description: Production — Instituto Superior Tecnico, Universidade de Lisboa
+tags:
+  - name: Institution
+    description: Institution-level metadata, contacts and academic calendar.
+  - name: Degrees
+    description: Degree catalog and the courses that belong to a degree.
+  - name: Courses
+    description: Individual course units, their schedules, groups, evaluations and students.
+  - name: Spaces
+    description: Campuses, buildings, floors and rooms, including blueprints.
+  - name: Campus Life
+    description: Parking, canteen and shuttle information.
+  - name: Domain Model
+    description: Serialized FenixEdu domain model.
+  - name: Person
+    description: Authenticated person-scoped academic data. Requires an OAuth 2.0 token.
+paths:
+  /about:
+    get:
+      tags: [Institution]
+      operationId: getAbout
+      summary: Institution metadata and current academic term
+      security: []
+      x-probe: {date: '2026-09-01', status: 200, content_type: application/json}
+      responses:
+        '200':
+          description: Institution metadata.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/About'}
+              examples:
+                live: {externalValue: ../examples/fenixedu-about.json}
+  /academicterms:
+    get:
+      tags: [Institution]
+      operationId: getAcademicTerms
+      summary: Academic terms known to the system, keyed by academic year
+      security: []
+      x-probe: {date: '2026-09-01', status: 200, content_type: application/json}
+      responses:
+        '200':
+          description: Map of academic year to the list of terms within it.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items: {type: string}
+              examples:
+                live: {externalValue: ../examples/fenixedu-academicterms.json}
+  /contacts:
+    get:
+      tags: [Institution]
+      operationId: getContacts
+      summary: Institutional contact points per campus
+      security: []
+      x-probe: {date: '2026-09-01', status: 200, content_type: application/json}
+      responses:
+        '200':
+          description: Campus contact records.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: '#/components/schemas/Contact'}
+  /degrees:
+    get:
+      tags: [Degrees]
+      operationId: listDegrees
+      summary: All degrees offered, optionally for one academic term
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/academicTerm'
+      x-probe: {date: '2026-09-01', status: 200, content_type: application/json}
+      responses:
+        '200':
+          description: Degree list.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: '#/components/schemas/Degree'}
+  /degrees/{id}:
+    get:
+      tags: [Degrees]
+      operationId: getDegree
+      summary: One degree, with campus, descriptive information and teaching staff
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/academicTerm'
+      x-probe: {date: '2026-09-01', status: 200, content_type: application/json}
+      responses:
+        '200':
+          description: Degree record.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Degree'}
+              examples:
+                live: {externalValue: ../examples/fenixedu-degree.json}
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /degrees/{id}/courses:
+    get:
+      tags: [Degrees]
+      operationId: listDegreeCourses
+      summary: Courses belonging to a degree in an academic term
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/id'
+        - $ref: '#/components/parameters/academicTerm'
+      x-probe: {date: '2026-09-01', status: 200, content_type: application/json}
+      responses:
+        '200':
+          description: Course list. May be empty for a term in which the degree ran no courses.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: '#/components/schemas/CourseSummary'}
+  /courses/{id}:
+    get:
+      tags: [Courses]
+      operationId: getCourse
+      summary: One course unit
+      security: []
+      parameters: [{$ref: '#/components/parameters/id'}]
+      x-probe: {date: '2026-09-01', status: 404, note: probed with a deliberately invalid id to capture the error contract}
+      responses:
+        '200':
+          description: Course record.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/CourseSummary'}
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /courses/{id}/evaluations:
+    get:
+      tags: [Courses]
+      operationId: listCourseEvaluations
+      summary: Evaluations scheduled for a course
+      security: []
+      parameters: [{$ref: '#/components/parameters/id'}]
+      x-documented-only: true
+      responses:
+        '200': {description: Evaluation list.}
+        '404': {$ref: '#/components/responses/NotFound'}
+  /courses/{id}/groups:
+    get:
+      tags: [Courses]
+      operationId: listCourseGroups
+      summary: Student groupings for a course
+      security: []
+      parameters: [{$ref: '#/components/parameters/id'}]
+      x-documented-only: true
+      responses:
+        '200': {description: Group list.}
+        '404': {$ref: '#/components/responses/NotFound'}
+  /courses/{id}/schedule:
+    get:
+      tags: [Courses]
+      operationId: getCourseSchedule
+      summary: Timetable for a course
+      security: []
+      parameters: [{$ref: '#/components/parameters/id'}]
+      x-documented-only: true
+      responses:
+        '200': {description: Course schedule.}
+        '404': {$ref: '#/components/responses/NotFound'}
+  /courses/{id}/students:
+    get:
+      tags: [Courses]
+      operationId: listCourseStudents
+      summary: Enrolment counts and student listing for a course
+      security: []
+      parameters: [{$ref: '#/components/parameters/id'}]
+      x-documented-only: true
+      responses:
+        '200': {description: Student listing.}
+        '404': {$ref: '#/components/responses/NotFound'}
+  /spaces:
+    get:
+      tags: [Spaces]
+      operationId: listSpaces
+      summary: Top-level campuses
+      security: []
+      x-probe: {date: '2026-09-01', status: 200, content_type: application/json}
+      responses:
+        '200':
+          description: Campus list.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {$ref: '#/components/schemas/SpaceSummary'}
+              examples:
+                live: {externalValue: ../examples/fenixedu-spaces.json}
+  /spaces/{id}:
+    get:
+      tags: [Spaces]
+      operationId: getSpace
+      summary: One space, with the spaces it contains
+      security: []
+      parameters: [{$ref: '#/components/parameters/id'}]
+      x-probe: {date: '2026-09-01', status: 200, content_type: application/json}
+      responses:
+        '200':
+          description: Space record.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Space'}
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /spaces/{id}/blueprint:
+    get:
+      tags: [Spaces]
+      operationId: getSpaceBlueprint
+      summary: Floor-plan blueprint for a space
+      security: []
+      parameters: [{$ref: '#/components/parameters/id'}]
+      x-probe: {date: '2026-09-01', status: 200, content_type: image/jpeg}
+      responses:
+        '200':
+          description: Blueprint image.
+          content:
+            image/jpeg:
+              schema: {type: string, format: binary}
+  /parking:
+    get:
+      tags: [Campus Life]
+      operationId: getParking
+      summary: Campus parking facilities
+      security: []
+      x-probe: {date: '2026-09-01', status: 200, content_type: application/json}
+      responses:
+        '200':
+          description: Parking records keyed by campus name.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {$ref: '#/components/schemas/Parking'}
+              examples:
+                live: {externalValue: ../examples/fenixedu-parking.json}
+  /canteen:
+    get:
+      tags: [Campus Life]
+      operationId: getCanteen
+      summary: Canteen menu
+      security: []
+      x-probe:
+        date: '2026-09-01'
+        status: 500
+        note: >-
+          Endpoint is published and routed but returned HTTP 500 with a Java stack
+          trace on 2026-09-01. Recorded as a live defect, not as an absent endpoint.
+      responses:
+        '200': {description: Canteen menu.}
+        '500': {description: Server error. Observed on 2026-09-01.}
+  /shuttle:
+    get:
+      tags: [Campus Life]
+      operationId: getShuttle
+      summary: Inter-campus shuttle service
+      security: []
+      x-probe:
+        date: '2026-09-01'
+        status: 200
+        note: Returned an empty JSON object; the service appears to be out of season.
+      responses:
+        '200':
+          description: Shuttle information. Observed empty.
+          content:
+            application/json:
+              schema: {type: object}
+  /domainModel:
+    get:
+      tags: [Domain Model]
+      operationId: getDomainModel
+      summary: Serialized FenixEdu domain model — classes, superclasses, interfaces and relations
+      security: []
+      x-probe: {date: '2026-09-01', status: 200, content_type: application/json, bytes: 1284290}
+      responses:
+        '200':
+          description: Domain model description.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  classes:
+                    type: array
+                    items: {type: object}
+  /person:
+    get:
+      tags: [Person]
+      operationId: getPerson
+      summary: Personal profile of the authenticated user
+      security: [{fenixOAuth: []}]
+      x-probe:
+        date: '2026-09-01'
+        status: 401
+        note: Probed without a token to capture the authentication error contract.
+      responses:
+        '200': {description: Person record.}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+  /person/courses:
+    get:
+      tags: [Person]
+      operationId: getPersonCourses
+      summary: Courses the authenticated user is enrolled in or teaches
+      security: [{fenixOAuth: []}]
+      x-documented-only: true
+      responses:
+        '200': {description: Course enrolments.}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+  /person/curriculum:
+    get:
+      tags: [Person]
+      operationId: getPersonCurriculum
+      summary: Complete curriculum of the authenticated user
+      security: [{fenixOAuth: []}]
+      x-documented-only: true
+      responses:
+        '200': {description: Curriculum.}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+  /person/calendar/classes:
+    get:
+      tags: [Person]
+      operationId: getPersonClassCalendar
+      summary: Class calendar of the authenticated user
+      security: [{fenixOAuth: []}]
+      x-documented-only: true
+      responses:
+        '200': {description: Class calendar.}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+  /person/calendar/evaluations:
+    get:
+      tags: [Person]
+      operationId: getPersonEvaluationCalendar
+      summary: Evaluation calendar of the authenticated user
+      security: [{fenixOAuth: []}]
+      x-documented-only: true
+      responses:
+        '200': {description: Evaluation calendar.}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+  /person/evaluations:
+    get:
+      tags: [Person]
+      operationId: getPersonEvaluations
+      summary: Written evaluations available to the authenticated user
+      security: [{fenixOAuth: []}]
+      x-documented-only: true
+      responses:
+        '200': {description: Evaluation list.}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+  /person/evaluations/{id}:
+    put:
+      tags: [Person]
+      operationId: enrolPersonEvaluation
+      summary: Enrol in or withdraw from an evaluation
+      security: [{fenixOAuth: []}]
+      parameters: [{$ref: '#/components/parameters/id'}]
+      x-documented-only: true
+      responses:
+        '200': {description: Updated enrolment state.}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+  /person/payments:
+    get:
+      tags: [Person]
+      operationId: getPersonPayments
+      summary: Payment and tuition records of the authenticated user
+      security: [{fenixOAuth: []}]
+      x-documented-only: true
+      responses:
+        '200': {description: Payment records.}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+components:
+  securitySchemes:
+    fenixOAuth:
+      type: oauth2
+      description: >-
+        Bennu OAuth 2.0, the authorization layer shipped with FenixEdu and copyrighted
+        by Instituto Superior Tecnico. Applications are registered by an authenticated
+        member of the institution; the access scopes granted are chosen per application
+        at registration time and are not enumerated in a machine-readable document, so
+        no scope names are asserted here.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://fenix.tecnico.ulisboa.pt/oauth/userdialog
+          tokenUrl: https://fenix.tecnico.ulisboa.pt/oauth/access_token
+          scopes: {}
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: FenixEdu external identifier of the resource.
+      schema: {type: string}
+    academicTerm:
+      name: academicTerm
+      in: query
+      required: false
+      description: Academic term in the form "2025/2026". Defaults to the current term.
+      schema: {type: string, pattern: '^[0-9]{4}/[0-9]{4}$'}
+      example: 2025/2026
+  responses:
+    NotFound:
+      description: No resource with the supplied identifier. Observed 2026-09-01.
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}
+          examples:
+            live: {externalValue: ../examples/fenixedu-error-404.json}
+    Unauthorized:
+      description: Missing or malformed OAuth access token. Observed 2026-09-01.
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/OAuthError'}
+          examples:
+            live: {externalValue: ../examples/fenixedu-error-401.json}
+  schemas:
+    About:
+      type: object
+      properties:
+        institutionName: {type: string}
+        institutionUrl: {type: string, format: uri}
+        currentAcademicTerm: {type: string}
+        language: {type: string}
+        languages: {type: array, items: {type: string}}
+        rssFeeds:
+          type: array
+          items:
+            type: object
+            properties:
+              description: {type: string}
+              url: {type: string}
+        rss:
+          type: object
+          additionalProperties: {type: string}
+    Contact:
+      type: object
+      properties:
+        name: {type: string}
+        email: {type: string}
+        phone: {type: string}
+        fax: {type: string}
+        address: {type: string}
+        postalCode: {type: string}
+        workingHours: {type: string}
+    Degree:
+      type: object
+      required: [id, name]
+      properties:
+        id: {type: string}
+        name: {type: string}
+        acronym: {type: string}
+        academicTerm: {type: string}
+        academicTerms: {type: array, items: {type: string}}
+        type: {type: string}
+        typeName: {type: string}
+        url: {type: string, format: uri}
+        campus:
+          type: array
+          items: {$ref: '#/components/schemas/SpaceSummary'}
+        info: {$ref: '#/components/schemas/DegreeInfo'}
+        teachers:
+          type: array
+          description: >-
+            Named teaching staff with personal e-mail addresses and homepage URLs. The
+            captured example in ../examples/ redacts this array under the API
+            Evangelist personal-data guardrail.
+          items:
+            type: object
+            properties:
+              name: {type: string}
+              istId: {type: string}
+              mails: {type: array, items: {type: string}}
+              urls: {type: array, items: {type: string}}
+    DegreeInfo:
+      type: object
+      description: Descriptive prose about a degree. Values are HTML fragments, frequently HTML-entity encoded.
+      properties:
+        description: {type: string}
+        objectives: {type: string}
+        designFor: {type: string}
+        requisites: {type: string}
+        profissionalExits: {type: string}
+        history: {type: string}
+        operationRegime: {type: string}
+        gratuity: {type: string}
+        links: {type: string}
+    CourseSummary:
+      type: object
+      properties:
+        id: {type: string}
+        name: {type: string}
+        acronym: {type: string}
+        academicTerm: {type: string}
+        url: {type: string, format: uri}
+    SpaceSummary:
+      type: object
+      required: [id, name, type]
+      properties:
+        id: {type: string}
+        name: {type: string}
+        type:
+          type: string
+          description: Observed values include CAMPUS, BUILDING, FLOOR and ROOM.
+    Space:
+      allOf:
+        - $ref: '#/components/schemas/SpaceSummary'
+        - type: object
+          properties:
+            containedSpaces:
+              type: array
+              items: {$ref: '#/components/schemas/SpaceSummary'}
+    Parking:
+      type: object
+      properties:
+        campus: {type: string}
+        address: {type: string}
+        description: {type: string}
+    Error:
+      type: object
+      properties:
+        error: {type: string}
+        description: {type: string}
+    OAuthError:
+      type: object
+      properties:
+        error: {type: string}
+        error_description: {type: string}

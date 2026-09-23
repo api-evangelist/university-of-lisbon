@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/university-of-lisbon/main/json-schema/university-of-lisbon-fenixedu-degree.json",
+  "title": "FenixEdu Degree",
+  "description": "A degree offered by Instituto Superior Tecnico, Universidade de Lisboa, as returned by GET /degrees/{id} on the FenixEdu v1 API. Induced from a live response captured 2026-09-01. NOT WRITTEN BY THE PROVIDER.",
+  "x-provenance": {
+    "generated": "2026-09-01",
+    "method": "derived",
+    "source": "https://fenix.tecnico.ulisboa.pt/api/fenix/v1/degrees/2761663979717?academicTerm=2025/2026",
+    "note": "Derived by API Evangelist from the openapi/ contract, which was itself derived from live probes. Universidade de Lisboa publishes no JSON Schema."
+  },
+  "type": "object",
+  "required": ["id", "name"],
+  "properties": {
+    "id": { "type": "string", "description": "FenixEdu external identifier." },
+    "name": { "type": "string" },
+    "acronym": { "type": "string" },
+    "academicTerm": { "type": "string", "pattern": "^[0-9]{4}/[0-9]{4}$" },
+    "academicTerms": { "type": "array", "items": { "type": "string" } },
+    "type": { "type": "string" },
+    "typeName": { "type": "string" },
+    "url": { "type": "string", "format": "uri" },
+    "campus": {
+      "type": "array",
+      "items": { "$ref": "university-of-lisbon-fenixedu-space.json" }
+    },
+    "info": {
+      "type": "object",
+      "description": "Descriptive prose. Values are HTML fragments and are frequently HTML-entity encoded.",
+      "properties": {
+        "description": { "type": "string" },
+        "objectives": { "type": "string" },
+        "designFor": { "type": "string" },
+        "requisites": { "type": "string" },
+        "profissionalExits": { "type": "string" },
+        "history": { "type": "string" },
+        "operationRegime": { "type": "string" },
+        "gratuity": { "type": "string" },
+        "links": { "type": "string" }
+      }
+    },
+    "teachers": {
+      "type": "array",
+      "description": "Named teaching staff. Contains personal data — names, personal institutional e-mail addresses and homepage URLs.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "istId": { "type": "string" },
+          "mails": { "type": "array", "items": { "type": "string" } },
+          "urls": { "type": "array", "items": { "type": "string", "format": "uri" } }
+        }
+      }
+    }
+  }
+}

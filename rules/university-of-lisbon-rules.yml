@@ -1,0 +1,76 @@
+---
+name: University of Lisbon — Contract Rules
+generated: '2026-09-01'
+method: derived
+source: openapi/university-of-lisbon-fenixedu-academic-api-openapi.yml
+note: >-
+  A Spectral ruleset written by API Evangelist against the FenixEdu contract in this
+  repo. Uses built-in Spectral functions only. The provider publishes no governance
+  ruleset; these encode the defects actually observed while probing on 2026-09-01.
+extends: [[spectral:oas, off]]
+rules:
+  ulisboa-operator-declared:
+    description: Every contract in a university repo must declare who operates the thing it describes.
+    severity: error
+    given: $.info
+    then:
+      field: x-operator
+      function: truthy
+  ulisboa-provenance-declared:
+    description: An unmarked artifact is credited to the institution as though they published it.
+    severity: error
+    given: $.info
+    then:
+      field: x-provenance
+      function: truthy
+  ulisboa-absolute-server-url:
+    description: >-
+      servers[] must be absolute. A relative server URL makes host-based operator
+      attribution blind, which is exactly how thirty-six Elsevier Pure contracts were
+      credited to another university in this cohort.
+    severity: error
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: '^https://'
+  ulisboa-server-on-own-domain:
+    description: An institution-operated contract must be served from the institution's own registrable domain.
+    severity: error
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: 'ulisboa\.pt'
+  ulisboa-operation-id:
+    description: Every operation needs a stable operationId for agent tool generation.
+    severity: error
+    given: $.paths[*][get,put,post,patch,delete]
+    then:
+      field: operationId
+      function: truthy
+  ulisboa-operation-tagged:
+    description: Every operation must be tagged so the contract can be split per resource.
+    severity: error
+    given: $.paths[*][get,put,post,patch,delete]
+    then:
+      field: tags
+      function: truthy
+  ulisboa-error-response-documented:
+    description: >-
+      FenixEdu ships two incompatible error envelopes and a 500 with a raw Java stack
+      trace. Every operation that can fail must document the failure.
+    severity: warn
+    given: $.paths[*][get,put,post,patch,delete].responses
+    then:
+      function: truthy
+  ulisboa-security-declared:
+    description: >-
+      Every operation must state its security posture explicitly — an empty array for the
+      anonymous endpoints, the OAuth scheme for the person-scoped ones. Silence is
+      unreadable to an agent.
+    severity: error
+    given: $.paths[*][get,put,post,patch,delete]
+    then:
+      field: security
+      function: truthy

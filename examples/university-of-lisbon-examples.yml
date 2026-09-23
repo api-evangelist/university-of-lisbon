@@ -1,0 +1,76 @@
+---
+name: University of Lisbon — Example Payload Manifest
+generated: '2026-09-01'
+method: probed
+source: live probes against the institution's own hosts and the identifier registries it is registered in
+note: >-
+  The files in this directory are VERBATIM CAPTURES of real responses, kept byte-faithful
+  so they can be used as evidence. Provenance is therefore recorded here rather than
+  injected into the payloads. One exception is documented below. Nothing in this
+  directory was written by Universidade de Lisboa.
+examples:
+  - file: fenixedu-about.json
+    method: probed
+    source: https://fenix.tecnico.ulisboa.pt/api/fenix/v1/about
+    status: 200
+  - file: fenixedu-academicterms.json
+    method: probed
+    source: https://fenix.tecnico.ulisboa.pt/api/fenix/v1/academicterms
+    status: 200
+  - file: fenixedu-degree.json
+    method: probed
+    source: https://fenix.tecnico.ulisboa.pt/api/fenix/v1/degrees/2761663979717?academicTerm=2025/2026
+    status: 200
+    modified: true
+    modification_note: >-
+      NOT byte-faithful. The teachers[] array was redacted and a _note key added. The
+      live response returns named individuals with personal institutional e-mail
+      addresses and homepage URLs; storing those in a public catalog repository is
+      barred by the enrichment personal-data guardrail. Every other field is verbatim.
+  - file: fenixedu-spaces.json
+    method: probed
+    source: https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces
+    status: 200
+  - file: fenixedu-parking.json
+    method: probed
+    source: https://fenix.tecnico.ulisboa.pt/api/fenix/v1/parking
+    status: 200
+  - file: fenixedu-error-401.json
+    method: probed
+    source: https://fenix.tecnico.ulisboa.pt/api/fenix/v1/person
+    status: 401
+    note: Probed without a token to capture the OAuth error envelope.
+  - file: fenixedu-error-404.json
+    method: probed
+    source: https://fenix.tecnico.ulisboa.pt/api/fenix/v1/courses/1
+    status: 404
+    note: Probed with a deliberately invalid id to capture the resource error envelope.
+  - file: repositorio-oai-identify.xml
+    method: probed
+    source: https://repositorio.ulisboa.pt/server/oai/request?verb=Identify
+    status: 200
+  - file: repositorio-dspace-api-root.json
+    method: probed
+    source: https://repositorio.ulisboa.pt/server/api
+    status: 200
+  - file: repositorio-dspace-externalsources.json
+    method: probed
+    source: https://repositorio.ulisboa.pt/server/api/integration/externalsources?size=50
+    status: 200
+    note: Evidence for the orcid, datacite and crossref conformance claims.
+  - file: catalogo-koha-oai-identify.xml
+    method: probed
+    source: https://catalogo-bibliotecas.ulisboa.pt/cgi-bin/koha/oai.pl?verb=Identify
+    status: 200
+  - file: researchportal-pure-oai-identify.xml
+    method: probed
+    source: https://researchportal.ulisboa.pt/ws/oai?verb=Identify
+    status: 200
+    note: >-
+      The tenancy evidence. Institution hostname, institution adminEmail
+      (researchportal@ulisboa.pt), and a repositoryName of "Pure OAI Repository" with a
+      CERIF Service acronym of pure.atira.dk — Elsevier's contract, the institution's data.
+  - file: datacite-client-qwbt-ulisboa.json
+    method: probed
+    source: https://api.datacite.org/clients/qwbt.ulisboa
+    status: 200

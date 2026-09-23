@@ -1,0 +1,56 @@
+{
+  "id": "2761663979717",
+  "name": "Materiais e Processamento Avançados",
+  "acronym": "AdvaMTech",
+  "academicTerms": [
+    "2026/2027",
+    "2025/2026",
+    "2024/2025",
+    "2023/2024",
+    "2022/2023",
+    "2021/2022",
+    "2020/2021",
+    "2019/2020",
+    "2018/2019",
+    "2017/2018",
+    "2016/2017",
+    "2015/2016",
+    "2014/2015",
+    "2003/2004"
+  ],
+  "academicTerm": "2025/2026",
+  "type": "Diploma de Estudos Avançados",
+  "typeName": "Diploma de Estudos Avançados",
+  "url": "https://fenix.tecnico.ulisboa.pt/cursos/advamtech",
+  "campus": [
+    {
+      "type": "CAMPUS",
+      "id": "2448131360897",
+      "name": "Alameda"
+    }
+  ],
+  "info": {
+    "description": "O Programa Doutoral em Materiais e Processamento Avan&ccedil;ados (AdvaMTech) &eacute; um programa de doutouramento conjunto do Instituto Superior T&eacute;cnico (Universidade de Lisboa), da FCT da Universidade Nova de Lisboa, da FCT da Universidade de Coimbra, da Universidade de Aveiro, da FE da Universidade do Porto, da Universidade da Beira Interior, e da Universidade do Minho.&nbsp;",
+    "objectives": "<h4></h4>70% de todas as inova&ccedil;&otilde;es t&eacute;cnicas est&atilde;o direta ou indiretamente ligadas aos materiais.Esta percentagem tem vindo a crescer desde os anos 70 e &eacute; previs&iacute;vel que continue a crescer at&eacute; 2030.Os materiais avan&ccedil;ados foram identificados pela Comiss&atilde;o europeia como uma das cinco tecnologias chave de desenvolvimento. \n<br />O Programa Doutoral proposto em Materiais e Processamento Avan&ccedil;ados est&aacute; em linha com esta realidade,oferecendo um 3&ordm; Ciclo altamente interdisciplinar, constru&iacute;do da compet&ecirc;ncia e experi&ecirc;ncia das institui&ccedil;&otilde;es de investiga&ccedil;&atilde;o e departamentos acad&eacute;micos envolvidos. \n<br />O programa est&aacute; em linha com programas doutorais de Universidades e Institutos europeus de grande nomeada, o que tornar&aacute; os seus diplomados mais competitivos em qualquer parte do mundo, em particular na Europa, para al&eacute;m de abrir portas ao alargar de colabora&ccedil;&atilde;o cient&iacute;fica entre o pessoal envolvido, o que trar&aacute; como consequ&ecirc;ncia um refor&ccedil;o da competitividade portuguesa relativamente a projetos e redes de I&amp;D europeias. \n<br />",
+    "designFor": "A popula&ccedil;&atilde;o alvo s&atilde;o os detentores de grau de mestre, ou equivalente legal, em Qu&iacute;mica, F&iacute;sica, Engenharia, nomeadamente, Engenharia de Materiais e &aacute;reas afins. \n<br />Os candidatos ao programa devem satisfazer os requisitos de admiss&atilde;o das institui&ccedil;&otilde;es envolvidas, cujas regras ser&atilde;o anunciadas durante o processo de recrutamento, o qual ser&aacute; aberto a estudantes nacionais e internacionais. \n<br />Poder&atilde;o ser admitidos candidatos que n&atilde;o possuam o grau de mestre desde que obede&ccedil;am &agrave;s condi&ccedil;&otilde;es impostas no art&ordm; 30, ponto 1, do DL. N&ordm; 74/2006, de 24 de mar&ccedil;o.",
+    "requisites": "Os candidatos serão selecionados e seriados tendo em conta o seu curriculum académico, científico e técnico, experiência na área do programa, domínio da língua inglesa e a entrevista.",
+    "profissionalExits": "O Programa de Doutoramento visa a forma&ccedil;&atilde;o de investigadores altamente especializados na &aacute;rea da Engenharia de Materiais, dado que s&atilde;o formados nas v&aacute;rias Universidades que comp&otilde;em o programa, que poder&atilde;o exercer a sua actividade, em Portugal ou no estrangeiro, em Institui&ccedil;&otilde;es de Ensino Superior, Laborat&oacute;rios de Investiga&ccedil;&atilde;o ou Empresas.",
+    "history": "O Programa Doutoral iniciou-se no ano lectivo 2013/2014 sendo a 1&ordf; edi&ccedil;&atilde;o coordenada pela Universidade Nova de Lisboa. A 2&ordf; edi&ccedil;&atilde;o ocorreu em 2014/2015 coordenada pela Universidade de Coimbra e a 3&ordf; edi&ccedil;&atilde;o em 2015/2016 sob coordena&ccedil;&atilde;o da Universidade do Minho. \n<br />A 4&ordf; edi&ccedil;&atilde;o ocorreu em 2016/2017. \n<br />",
+    "operationRegime": "As teses s&atilde;o efectuadas em regime de co-tutela entre orientadores de duas das Universidades envolvidas no Programa. \n<br />",
+    "gratuity": "O aluno paga propinas anualmente na Universidade onde se inscreve. \n<br />",
+    "links": ""
+  },
+  "teachers": [
+    {
+      "name": "[redacted — named individual, PII guardrail]",
+      "istId": "[redacted]",
+      "mails": [
+        "[redacted]"
+      ],
+      "urls": [
+        "[redacted]"
+      ]
+    }
+  ],
+  "_note": "Example captured live from https://fenix.tecnico.ulisboa.pt/api/fenix/v1/degrees/2761663979717?academicTerm=2025/2026 on 2026-09-01. The teachers[] block was redacted: it returns named individuals and personal e-mail addresses."
+}

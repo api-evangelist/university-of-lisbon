@@ -1,0 +1,152 @@
+openapi: 3.2.0
+info:
+  title: FenixEdu Academic API — Instituto Superior Tecnico…
+  version: v1
+  summary: Public academic, campus and campus-life API of the FenixEdu academic information system operated by Instituto Superior Tecnico.
+  description: Public REST API of FenixEdu, the academic information system operated by Instituto Superior Tecnico (IST), a school of the Universidade de Lisboa.
+  contact:
+    name: Instituto Superior Tecnico — Universidade de Lisboa
+    url: https://tecnico.ulisboa.pt/
+    email: mail@tecnico.ulisboa.pt
+  license:
+    name: Not stated by the provider
+  termsOfService: https://www.ulisboa.pt/en/info/terms-use-0
+  x-operator: institution
+  x-operator-evidence: Host fenix.tecnico.ulisboa.pt is under the institution's own registrable domain ulisboa.pt; /about returns institutionName "Instituto Superior Tecnico" and institutionUrl https://tecnico.ulisboa.pt/; the OAuth dialog at /oauth/userdialog carries an Instituto Superior Tecnico copyright notice. No vendor name appears in servers[], info.title, info.contact or the served payloads.
+  x-provenance:
+    generated: '2026-09-01'
+    method: probed
+    source:
+    - https://fenix.tecnico.ulisboa.pt/api/fenix/v1/about
+    - https://fenixedu.org/dev/api/
+    note: Derived by API Evangelist from live probes and the provider's own human documentation. Not published by Universidade de Lisboa or by Instituto Superior Tecnico.
+servers:
+- url: https://fenix.tecnico.ulisboa.pt/api/fenix/v1
+  description: Production — Instituto Superior Tecnico, Universidade de Lisboa
+tags:
+- name: Institution
+  description: Institution-level metadata, contacts and academic calendar.
+paths:
+  /about:
+    get:
+      tags:
+      - Institution
+      operationId: getAbout
+      summary: Institution metadata and current academic term
+      security: []
+      x-probe:
+        date: '2026-09-01'
+        status: 200
+        content_type: application/json
+      responses:
+        '200':
+          description: Institution metadata.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/About'
+              examples:
+                live:
+                  externalValue: ../examples/fenixedu-about.json
+  /academicterms:
+    get:
+      tags:
+      - Institution
+      operationId: getAcademicTerms
+      summary: Academic terms known to the system, keyed by academic year
+      security: []
+      x-probe:
+        date: '2026-09-01'
+        status: 200
+        content_type: application/json
+      responses:
+        '200':
+          description: Map of academic year to the list of terms within it.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    type: string
+              examples:
+                live:
+                  externalValue: ../examples/fenixedu-academicterms.json
+  /contacts:
+    get:
+      tags:
+      - Institution
+      operationId: getContacts
+      summary: Institutional contact points per campus
+      security: []
+      x-probe:
+        date: '2026-09-01'
+        status: 200
+        content_type: application/json
+      responses:
+        '200':
+          description: Campus contact records.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contact'
+components:
+  schemas:
+    Contact:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        fax:
+          type: string
+        address:
+          type: string
+        postalCode:
+          type: string
+        workingHours:
+          type: string
+    About:
+      type: object
+      properties:
+        institutionName:
+          type: string
+        institutionUrl:
+          type: string
+          format: uri
+        currentAcademicTerm:
+          type: string
+        language:
+          type: string
+        languages:
+          type: array
+          items:
+            type: string
+        rssFeeds:
+          type: array
+          items:
+            type: object
+            properties:
+              description:
+                type: string
+              url:
+                type: string
+        rss:
+          type: object
+          additionalProperties:
+            type: string
+  securitySchemes:
+    fenixOAuth:
+      type: oauth2
+      description: Bennu OAuth 2.0, the authorization layer shipped with FenixEdu and copyrighted by Instituto Superior Tecnico. Applications are registered by an authenticated member of the institution; the access scopes granted are chosen per application at registration time and are not enumerated in a machine-readable document, so no scope names are asserted here.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://fenix.tecnico.ulisboa.pt/oauth/userdialog
+          tokenUrl: https://fenix.tecnico.ulisboa.pt/oauth/access_token
+          scopes: {}

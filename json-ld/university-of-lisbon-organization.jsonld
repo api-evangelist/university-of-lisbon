@@ -1,0 +1,61 @@
+{
+  "x-provenance": {
+    "generated": "2026-09-01",
+    "method": "probed",
+    "source": [
+      "https://api.ror.org/organizations?query=%22Universidade%20de%20Lisboa%22",
+      "https://api.crossref.org/members?query=lisboa",
+      "https://api.datacite.org/clients/qwbt.ulisboa",
+      "https://registry.erasmuswithoutpaper.eu/catalogue-v1.xml",
+      "https://technical.edugain.org/api.php?action=list_entities&format=json"
+    ],
+    "note": "Written by API Evangelist, not by Universidade de Lisboa. Every identifier below was resolved from the issuing registry's own API on 2026-09-01; nothing is asserted that a registry did not return."
+  },
+  "@context": "https://schema.org/",
+  "@type": "CollegeOrUniversity",
+  "@id": "https://ror.org/01c27hj86",
+  "name": "Universidade de Lisboa",
+  "alternateName": ["University of Lisbon", "ULisboa"],
+  "url": "https://www.ulisboa.pt/",
+  "location": {
+    "@type": "Place",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Lisboa",
+      "addressCountry": "PT"
+    }
+  },
+  "identifier": [
+    { "@type": "PropertyValue", "propertyID": "ROR", "value": "https://ror.org/01c27hj86" },
+    { "@type": "PropertyValue", "propertyID": "DataCite repository client", "value": "QWBT.ULISBOA" },
+    { "@type": "PropertyValue", "propertyID": "EWP HEI ID", "value": "ulisboa.pt" },
+    { "@type": "PropertyValue", "propertyID": "Erasmus code", "value": "P  LISBOA109" },
+    { "@type": "PropertyValue", "propertyID": "EU PIC", "value": "949885305" },
+    { "@type": "PropertyValue", "propertyID": "SAML entityID", "value": "https://id.ulisboa.pt/nidp/saml2/metadata" }
+  ],
+  "sameAs": [
+    "https://ror.org/01c27hj86",
+    "https://github.com/ULisboa",
+    "https://www.linkedin.com/school/universidade-de-lisboa/",
+    "https://en.wikipedia.org/wiki/University_of_Lisbon"
+  ],
+  "subOrganization": [
+    {
+      "@type": "CollegeOrUniversity",
+      "name": "Instituto Superior Técnico",
+      "url": "https://tecnico.ulisboa.pt/",
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "SAML entityID",
+        "value": "https://id.tecnico.ulisboa.pt/saml"
+      }
+    }
+  ],
+  "memberOf": [
+    { "@type": "Organization", "name": "RCTSaai", "description": "Portuguese national identity federation, operated by FCCN", "url": "https://www.fccn.pt" },
+    { "@type": "Organization", "name": "eduGAIN", "url": "https://technical.edugain.org/" },
+    { "@type": "Organization", "name": "DataCite", "url": "https://datacite.org/" },
+    { "@type": "Organization", "name": "RCAAP — Repositórios Científicos de Acesso Aberto de Portugal", "url": "https://www.rcaap.pt/" },
+    { "@type": "Organization", "name": "Erasmus Without Paper", "url": "https://www.erasmuswithoutpaper.eu/" }
+  ]
+}

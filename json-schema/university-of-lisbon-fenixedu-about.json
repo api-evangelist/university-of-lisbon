@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/university-of-lisbon/main/json-schema/university-of-lisbon-fenixedu-about.json",
+  "title": "FenixEdu About",
+  "description": "Institution metadata and current academic term, as returned by GET /about on the FenixEdu v1 API. This is the response that establishes the operator: institutionName and institutionUrl name Instituto Superior Tecnico. Induced from a live response captured 2026-09-01. NOT WRITTEN BY THE PROVIDER.",
+  "x-provenance": {
+    "generated": "2026-09-01",
+    "method": "derived",
+    "source": "https://fenix.tecnico.ulisboa.pt/api/fenix/v1/about",
+    "note": "Derived by API Evangelist from a live probe."
+  },
+  "type": "object",
+  "properties": {
+    "institutionName": { "type": "string" },
+    "institutionUrl": { "type": "string", "format": "uri" },
+    "currentAcademicTerm": { "type": "string" },
+    "language": { "type": "string" },
+    "languages": { "type": "array", "items": { "type": "string" } },
+    "rssFeeds": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "description": { "type": "string" },
+          "url": { "type": "string" }
+        }
+      }
+    },
+    "rss": { "type": "object", "additionalProperties": { "type": "string" } }
+  }
+}

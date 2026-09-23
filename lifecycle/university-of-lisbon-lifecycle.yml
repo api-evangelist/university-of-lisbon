@@ -1,0 +1,54 @@
+---
+name: University of Lisbon — API Lifecycle
+generated: '2026-09-01'
+method: probed
+source:
+  - https://fenixedu.org/dev/api/
+  - https://fenix.tecnico.ulisboa.pt/api/fenix/v1/about
+  - https://github.com/ULisboa/ewp-node
+  - https://repositorio.ulisboa.pt/server/api
+note: Written by API Evangelist from live probes. The institution publishes no lifecycle policy for any of its surfaces.
+surfaces:
+  - surface: FenixEdu Academic API (Instituto Superior Técnico)
+    versioning: URI path version, /api/fenix/v1
+    version_observed: v1
+    stability: >-
+      Long-lived and in production, but frozen at v1 with no published successor, no
+      deprecation policy, no sunset headers and no changelog. Anonymous endpoints have
+      been stable enough that third-party student apps depend on them.
+    defects_observed:
+      - GET /canteen returned 500 with a Java stack trace on 2026-09-01.
+      - GET /shuttle returned an empty object with no empty-state semantics.
+    status_page: none found
+    changelog: none found
+    sla: none published
+    support: mail@tecnico.ulisboa.pt (general institutional contact; no developer support channel)
+  - surface: Repositório ULisboa (DSpace)
+    versioning: Software version, exposed by the API itself
+    version_observed: DSpace 7.6.1
+    stability: >-
+      Operating since November 2002 per the OAI-PMH Identify response; 100,245 items.
+      The REST contract is DSpace's, not the institution's, and moves with DSpace
+      upstream releases rather than on an institutional schedule.
+    changelog: upstream DSpace release notes only
+  - surface: Union library catalog (Koha)
+    versioning: none exposed
+    stability: >-
+      OAI-PMH endpoint answers Identify but reports repositoryName "ULisboa - " with a
+      trailing empty component and earliestDatestamp 0001-01-01, both configuration
+      defects rather than real values. RSS output at opac-search.pl returns 403.
+  - surface: EWP node (ulisboa.pt)
+    versioning: Per-API semantic versions declared in the EWP registry manifest
+    version_observed: discovery 6.0.0, institutions 2.2.0, organizational-units 2.1.1, iia-cnr 3.0.0
+    stability: >-
+      Governed by the Erasmus Without Paper registry, which is the healthiest lifecycle
+      discipline anywhere in this institution's footprint — versions are declared,
+      discoverable and machine-validated. The endpoints run on a third party's host.
+  - surface: ULisboa EWP open-source libraries
+    versioning: Git tags and Docker image CI
+    stability: >-
+      Self-described as "still early in development ... until the first major version is
+      released, non-backward changes may be introduced." Actively maintained — last push
+      2026-08-13.
+    repository: https://github.com/ULisboa/ewp-node
+deprecations_observed: none published

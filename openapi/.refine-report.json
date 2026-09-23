@@ -1,0 +1,32 @@
+{
+  "provider": "university-of-lisbon",
+  "sources": [
+    "_original/university-of-lisbon-fenixedu-academic-api.yml"
+  ],
+  "outputs": [
+    "university-of-lisbon-campus-life-api-openapi.yml",
+    "university-of-lisbon-courses-api-openapi.yml",
+    "university-of-lisbon-degrees-api-openapi.yml",
+    "university-of-lisbon-domain-model-api-openapi.yml",
+    "university-of-lisbon-institution-api-openapi.yml",
+    "university-of-lisbon-person-api-openapi.yml",
+    "university-of-lisbon-spaces-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "university-of-lisbon-fenixedu-academic-api.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "university-of-lisbon-campus-life-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "university-of-lisbon-courses-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "university-of-lisbon-degrees-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "university-of-lisbon-domain-model-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "university-of-lisbon-institution-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "university-of-lisbon-person-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "university-of-lisbon-spaces-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

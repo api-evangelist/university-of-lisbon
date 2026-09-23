@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/university-of-lisbon/main/json-schema/university-of-lisbon-fenixedu-space.json",
+  "title": "FenixEdu Space",
+  "description": "A campus, building, floor or room in the Instituto Superior Tecnico estate, as returned by GET /spaces and GET /spaces/{id}. Spaces nest recursively through containedSpaces. Induced from live responses captured 2026-09-01. NOT WRITTEN BY THE PROVIDER.",
+  "x-provenance": {
+    "generated": "2026-09-01",
+    "method": "derived",
+    "source": "https://fenix.tecnico.ulisboa.pt/api/fenix/v1/spaces/2448131360897",
+    "note": "Derived by API Evangelist from live probes. Universidade de Lisboa publishes no JSON Schema."
+  },
+  "type": "object",
+  "required": ["id", "name", "type"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "type": {
+      "type": "string",
+      "description": "Observed values: CAMPUS, BUILDING, FLOOR, ROOM."
+    },
+    "containedSpaces": {
+      "type": "array",
+      "items": { "$ref": "university-of-lisbon-fenixedu-space.json" }
+    }
+  }
+}

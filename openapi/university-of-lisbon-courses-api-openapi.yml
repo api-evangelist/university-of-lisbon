@@ -1,0 +1,161 @@
+openapi: 3.2.0
+info:
+  title: FenixEdu Academic API — Instituto Superior Tecnico…
+  version: v1
+  summary: Public academic, campus and campus-life API of the FenixEdu academic information system operated by Instituto Superior Tecnico.
+  description: Public REST API of FenixEdu, the academic information system operated by Instituto Superior Tecnico (IST), a school of the Universidade de Lisboa.
+  contact:
+    name: Instituto Superior Tecnico — Universidade de Lisboa
+    url: https://tecnico.ulisboa.pt/
+    email: mail@tecnico.ulisboa.pt
+  license:
+    name: Not stated by the provider
+  termsOfService: https://www.ulisboa.pt/en/info/terms-use-0
+  x-operator: institution
+  x-operator-evidence: Host fenix.tecnico.ulisboa.pt is under the institution's own registrable domain ulisboa.pt; /about returns institutionName "Instituto Superior Tecnico" and institutionUrl https://tecnico.ulisboa.pt/; the OAuth dialog at /oauth/userdialog carries an Instituto Superior Tecnico copyright notice. No vendor name appears in servers[], info.title, info.contact or the served payloads.
+  x-provenance:
+    generated: '2026-09-01'
+    method: probed
+    source:
+    - https://fenix.tecnico.ulisboa.pt/api/fenix/v1/about
+    - https://fenixedu.org/dev/api/
+    note: Derived by API Evangelist from live probes and the provider's own human documentation. Not published by Universidade de Lisboa or by Instituto Superior Tecnico.
+servers:
+- url: https://fenix.tecnico.ulisboa.pt/api/fenix/v1
+  description: Production — Instituto Superior Tecnico, Universidade de Lisboa
+tags:
+- name: Courses
+  description: Individual course units, their schedules, groups, evaluations and students.
+paths:
+  /courses/{id}:
+    get:
+      tags:
+      - Courses
+      operationId: getCourse
+      summary: One course unit
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/id'
+      x-probe:
+        date: '2026-09-01'
+        status: 404
+        note: probed with a deliberately invalid id to capture the error contract
+      responses:
+        '200':
+          description: Course record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseSummary'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /courses/{id}/evaluations:
+    get:
+      tags:
+      - Courses
+      operationId: listCourseEvaluations
+      summary: Evaluations scheduled for a course
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/id'
+      x-documented-only: true
+      responses:
+        '200':
+          description: Evaluation list.
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /courses/{id}/groups:
+    get:
+      tags:
+      - Courses
+      operationId: listCourseGroups
+      summary: Student groupings for a course
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/id'
+      x-documented-only: true
+      responses:
+        '200':
+          description: Group list.
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /courses/{id}/schedule:
+    get:
+      tags:
+      - Courses
+      operationId: getCourseSchedule
+      summary: Timetable for a course
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/id'
+      x-documented-only: true
+      responses:
+        '200':
+          description: Course schedule.
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /courses/{id}/students:
+    get:
+      tags:
+      - Courses
+      operationId: listCourseStudents
+      summary: Enrolment counts and student listing for a course
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/id'
+      x-documented-only: true
+      responses:
+        '200':
+          description: Student listing.
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        description:
+          type: string
+    CourseSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        acronym:
+          type: string
+        academicTerm:
+          type: string
+        url:
+          type: string
+          format: uri
+  responses:
+    NotFound:
+      description: No resource with the supplied identifier. Observed 2026-09-01.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            live:
+              externalValue: ../examples/fenixedu-error-404.json
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: FenixEdu external identifier of the resource.
+      schema:
+        type: string
+  securitySchemes:
+    fenixOAuth:
+      type: oauth2
+      description: Bennu OAuth 2.0, the authorization layer shipped with FenixEdu and copyrighted by Instituto Superior Tecnico. Applications are registered by an authenticated member of the institution; the access scopes granted are chosen per application at registration time and are not enumerated in a machine-readable document, so no scope names are asserted here.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://fenix.tecnico.ulisboa.pt/oauth/userdialog
+          tokenUrl: https://fenix.tecnico.ulisboa.pt/oauth/access_token
+          scopes: {}

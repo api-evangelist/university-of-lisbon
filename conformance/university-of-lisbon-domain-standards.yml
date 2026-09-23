@@ -1,0 +1,204 @@
+---
+name: University of Lisbon — Education Domain Standard Conformance
+regime: education
+generated: '2026-09-01'
+method: probed
+source:
+  - https://repositorio.ulisboa.pt/server/oai/request?verb=Identify
+  - https://catalogo-bibliotecas.ulisboa.pt/cgi-bin/koha/oai.pl?verb=Identify
+  - https://id.ulisboa.pt/nidp/saml2/metadata
+  - https://repositorio.ulisboa.pt/server/api/integration/externalsources
+  - https://api.datacite.org/clients/qwbt.ulisboa
+  - https://api.crossref.org/members?query=lisboa
+  - https://api.ror.org/organizations?query=%22Universidade%20de%20Lisboa%22
+  - https://technical.edugain.org/api.php?action=list_entities&format=json
+note: >-
+  Written by API Evangelist from live probes on 2026-09-01. Every "met" below points at
+  a location in a machine-readable surface, not at a prose claim on a web page. This is
+  reward-only: the standards with no evidence are recorded as not met rather than
+  softened.
+standards:
+  - id: oai-pmh
+    met: true
+    confidence: high
+    detail: >-
+      TWO independent OAI-PMH 2.0 endpoints, both on hosts under the institution's own
+      registrable domain, both answering a real Identify verb rather than merely being
+      linked. The repository endpoint has been operating since November 2002 and holds
+      100,245 items; the union library catalog endpoint serves the collective catalog of
+      the 18 schools.
+    evidence:
+      - url: https://repositorio.ulisboa.pt/server/oai/request?verb=Identify
+        status: 200
+        location: 'OAI-PMH/Identify — repositoryName "Repositório Científico de Acesso Aberto da ULisboa", protocolVersion 2.0, adminEmail repositorio@ulisboa.pt, earliestDatestamp 2002-11-01, repositoryIdentifier repositorio.ulisboa.pt'
+      - url: https://repositorio.ulisboa.pt/server/oai/request?verb=ListMetadataFormats
+        status: 200
+        location: '12 metadata formats — oai_dc, marc, mods, mets, ore, rdf, dim, qdc, didl, xoai, etdms, uketd_dc'
+      - url: https://catalogo-bibliotecas.ulisboa.pt/cgi-bin/koha/oai.pl?verb=Identify
+        status: 200
+        location: 'OAI-PMH/Identify — baseURL https://catalogo-bibliotecas.ulisboa.pt/opac/oai.pl, protocolVersion 2.0, adminEmail no-reply@reitoria.ulisboa.pt, deletedRecord persistent, compression gzip'
+      - url: https://repositorio.ulisboa.pt/server/api/discover/search/objects?size=1
+        status: 200
+        location: page.totalElements = 100245
+  - id: saml
+    met: true
+    confidence: high
+    detail: >-
+      A live SAML 2.0 EntityDescriptor operated by the institution itself, carrying
+      OrganizationName "Universidade de Lisboa" and OrganizationURL www.ulisboa.pt,
+      registered into the Portuguese national federation RCTSaai by FCCN and published
+      onward to eduGAIN. A second SAML IdP covers Instituto Superior Técnico and asserts
+      SIRTFI.
+    evidence:
+      - url: https://id.ulisboa.pt/nidp/saml2/metadata
+        status: 200
+        location: 'md:EntityDescriptor entityID="https://id.ulisboa.pt/nidp/saml2/metadata"; IDPSSODescriptor, SPSSODescriptor and AttributeAuthorityDescriptor; protocolSupportEnumeration urn:oasis:names:tc:SAML:2.0:protocol; HTTP-POST and HTTP-Redirect SSO bindings; persistent and transient NameID formats'
+      - url: https://technical.edugain.org/api.php?action=list_entities&format=json
+        status: 200
+        location: 'eduGAIN entity 852270 — "Universidade de Lisboa", IDPSSODescriptor, regauth https://www.fccn.pt, federation code RCTSAAI, scope ulisboa.pt, first_seen 2022-12-27, eccs_status 1'
+      - url: https://technical.edugain.org/api.php?action=list_entities&format=json
+        status: 200
+        location: 'eduGAIN entity 673215 — "ULisboa - Instituto Superior Técnico", IDPSSODescriptor, entityID https://id.tecnico.ulisboa.pt/saml, scope tecnico.ulisboa.pt, sirtfi_status 1, first_seen 2018-01-30'
+      - url: https://technical.edugain.org/api.php?action=list_entities&format=json
+        status: 200
+        location: 'eduGAIN entity 673293 — SPSSODescriptor "FenixEdu Técnico Lisboa", entityID https://fenix.tecnico.ulisboa.pt, GÉANT Data Protection Code of Conduct asserted (coco_status 1)'
+  - id: shibboleth
+    met: false
+    confidence: medium
+    detail: >-
+      The institution is federated, but not on Shibboleth software as far as the served
+      metadata shows. The central IdP endpoint is /nidp/saml2/metadata — a NetIQ/OpenText
+      Access Manager path, not a Shibboleth one — and https://idp.ulisboa.pt/idp/shibboleth
+      returns a Tomcat 404. The federation membership itself is credited above under
+      `saml`; nothing is claimed for Shibboleth specifically.
+    evidence:
+      - url: https://idp.ulisboa.pt/idp/shibboleth
+        status: 404
+        location: Apache Tomcat "HTTP Status 404 – Not Found" page
+      - url: https://id.ulisboa.pt/nidp/saml2/metadata
+        status: 200
+        location: NetIQ Access Manager /nidp/ metadata path
+  - id: orcid
+    met: true
+    confidence: high
+    detail: >-
+      ORCID is wired into the deployed repository contract, not merely mentioned in
+      documentation: the DSpace 7.6.1 instance advertises `orcid` and `orcidWorks` as
+      enabled external metadata sources, so records can be looked up and claimed against
+      ORCID identifiers from inside the institution's own API.
+    evidence:
+      - url: https://repositorio.ulisboa.pt/server/api/integration/externalsources
+        status: 200
+        location: '_embedded.externalsources[].id includes "orcid" and "orcidWorks"'
+  - id: datacite
+    met: true
+    confidence: medium
+    detail: >-
+      An active DataCite repository client is registered to the institution —
+      QWBT.ULISBOA, "Universidade de Lisboa / Serviços Centrais", clientType repository,
+      created 2022-02-04, isActive true — and the repository software has DataCite
+      enabled as an external source. The membership is real; the OUTPUT is not: the
+      DataCite DOI API returns zero DOIs minted under this client. Recorded as met on the
+      membership with that caveat stated, not softened away and not inflated.
+    evidence:
+      - url: https://api.datacite.org/clients/qwbt.ulisboa
+        status: 200
+        location: 'data.attributes — symbol QWBT.ULISBOA, clientType repository, isActive true, url https://repositorio.ul.pt/'
+      - url: https://api.datacite.org/dois?client-id=qwbt.ulisboa
+        status: 200
+        location: meta.total = 0 — no DOIs registered under the client
+      - url: https://repositorio.ulisboa.pt/server/api/integration/externalsources
+        status: 200
+        location: '_embedded.externalsources[].id includes "datacite"'
+  - id: crossref
+    met: true
+    confidence: medium
+    detail: >-
+      Crossref is an enabled external source in the deployed repository contract, and
+      five ULisboa organic units hold Crossref member IDs in their own right — the
+      federated-buyer pattern showing up in the identifier layer as well as the
+      procurement layer.
+    evidence:
+      - url: https://repositorio.ulisboa.pt/server/api/integration/externalsources
+        status: 200
+        location: '_embedded.externalsources[].id includes "crossref"'
+      - url: https://api.crossref.org/members?query=lisboa
+        status: 200
+        location: 'members 28206 Faculdade de Letras; 35305 Faculdade de Ciências; 7614 Centro de Estudos Geográficos (IGOT); 26494 INET-md (FMH); 29121 Ophiussa, Centro de Arqueologia'
+  - id: scim
+    met: false
+    confidence: high
+    detail: No SCIM 2.0 endpoint, schema or discovery document found on any institution host.
+  - id: lti
+    met: false
+    confidence: medium
+    detail: >-
+      No LTI tool or platform registration, no LTI Advantage security contract and no
+      /.well-known/lti-configuration found on any institution host. The learning
+      platforms of the individual schools were not reachable anonymously.
+  - id: oneroster
+    met: false
+    confidence: high
+    detail: >-
+      No OneRoster endpoint. Roster-shaped data does exist — FenixEdu exposes
+      /courses/{id}/students — but under its own proprietary contract, not the 1EdTech one.
+  - id: ed-fi
+    met: false
+    confidence: high
+    detail: No Ed-Fi ODS or API. Ed-Fi has effectively no European higher-education footprint.
+  - id: caliper
+    met: false
+    confidence: high
+    detail: No Caliper Analytics sensor or event store found.
+  - id: qti
+    met: false
+    confidence: high
+    detail: No QTI assessment interchange surface found.
+adjacent_standards_met:
+  - id: ewp
+    name: Erasmus Without Paper (EWP) APIs
+    met: true
+    detail: >-
+      The institution is a registered EWP node under HEI ID ulisboa.pt (Erasmus code
+      P LISBOA109, PIC 949885305), implementing discovery 6.0.0, institutions 2.2.0,
+      organizational-units 2.1.1 and iia-cnr 3.0.0 with HTTP-signature client and server
+      authentication. Not in the education regime's standards[] list, and the endpoints
+      run on a third party's host — see apis.yml, x-operator: tenant — but the
+      institution also AUTHORS an open-source EWP node implementation on GitHub, which
+      is its most substantive piece of public API engineering.
+    evidence:
+      - url: https://registry.erasmuswithoutpaper.eu/catalogue-v1.xml
+        status: 200
+        location: '<hei id="ulisboa.pt"> — UNIVERSIDADE DE LISBOA; host manifest https://unizoneewp.it.auth.gr/rest/manifest/ulisboa.pt'
+      - url: https://github.com/ULisboa/ewp-node
+        status: 200
+        location: 'Institution-authored EWP node, Java, last pushed 2026-08-13'
+  - id: ror
+    name: Research Organization Registry
+    met: true
+    detail: Registered organization identifier https://ror.org/01c27hj86, domain ulisboa.pt.
+    evidence:
+      - url: https://api.ror.org/organizations?query=%22Universidade%20de%20Lisboa%22
+        status: 200
+        location: 'items[0].id = https://ror.org/01c27hj86, names Universidade de Lisboa / University of Lisbon, domains ["ulisboa.pt"]'
+  - id: dublin-core
+    name: Dublin Core / DCMI metadata terms
+    met: true
+    detail: oai_dc and qdc served by the repository OAI-PMH endpoint.
+    evidence:
+      - url: https://repositorio.ulisboa.pt/server/oai/request?verb=ListMetadataFormats
+        status: 200
+        location: metadataPrefix oai_dc, qdc
+  - id: marc21
+    name: MARC 21 / MARCXML
+    met: true
+    detail: marcxml served by the Koha union catalog OAI-PMH endpoint.
+    evidence:
+      - url: https://catalogo-bibliotecas.ulisboa.pt/cgi-bin/koha/oai.pl?verb=ListMetadataFormats
+        status: 200
+        location: metadataPrefix marcxml
+summary:
+  regime_standards_total: 12
+  regime_standards_met: 5
+  met: [oai-pmh, saml, orcid, datacite, crossref]
+  not_met: [scim, lti, oneroster, ed-fi, caliper, qti, shibboleth]

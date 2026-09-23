@@ -1,0 +1,182 @@
+openapi: 3.2.0
+info:
+  title: FenixEdu Academic API — Instituto Superior Tecnico…
+  version: v1
+  summary: Public academic, campus and campus-life API of the FenixEdu academic information system operated by Instituto Superior Tecnico.
+  description: Public REST API of FenixEdu, the academic information system operated by Instituto Superior Tecnico (IST), a school of the Universidade de Lisboa.
+  contact:
+    name: Instituto Superior Tecnico — Universidade de Lisboa
+    url: https://tecnico.ulisboa.pt/
+    email: mail@tecnico.ulisboa.pt
+  license:
+    name: Not stated by the provider
+  termsOfService: https://www.ulisboa.pt/en/info/terms-use-0
+  x-operator: institution
+  x-operator-evidence: Host fenix.tecnico.ulisboa.pt is under the institution's own registrable domain ulisboa.pt; /about returns institutionName "Instituto Superior Tecnico" and institutionUrl https://tecnico.ulisboa.pt/; the OAuth dialog at /oauth/userdialog carries an Instituto Superior Tecnico copyright notice. No vendor name appears in servers[], info.title, info.contact or the served payloads.
+  x-provenance:
+    generated: '2026-09-01'
+    method: probed
+    source:
+    - https://fenix.tecnico.ulisboa.pt/api/fenix/v1/about
+    - https://fenixedu.org/dev/api/
+    note: Derived by API Evangelist from live probes and the provider's own human documentation. Not published by Universidade de Lisboa or by Instituto Superior Tecnico.
+servers:
+- url: https://fenix.tecnico.ulisboa.pt/api/fenix/v1
+  description: Production — Instituto Superior Tecnico, Universidade de Lisboa
+tags:
+- name: Person
+  description: Authenticated person-scoped academic data. Requires an OAuth 2.0 token.
+paths:
+  /person:
+    get:
+      tags:
+      - Person
+      operationId: getPerson
+      summary: Personal profile of the authenticated user
+      security:
+      - fenixOAuth: []
+      x-probe:
+        date: '2026-09-01'
+        status: 401
+        note: Probed without a token to capture the authentication error contract.
+      responses:
+        '200':
+          description: Person record.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /person/courses:
+    get:
+      tags:
+      - Person
+      operationId: getPersonCourses
+      summary: Courses the authenticated user is enrolled in or teaches
+      security:
+      - fenixOAuth: []
+      x-documented-only: true
+      responses:
+        '200':
+          description: Course enrolments.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /person/curriculum:
+    get:
+      tags:
+      - Person
+      operationId: getPersonCurriculum
+      summary: Complete curriculum of the authenticated user
+      security:
+      - fenixOAuth: []
+      x-documented-only: true
+      responses:
+        '200':
+          description: Curriculum.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /person/calendar/classes:
+    get:
+      tags:
+      - Person
+      operationId: getPersonClassCalendar
+      summary: Class calendar of the authenticated user
+      security:
+      - fenixOAuth: []
+      x-documented-only: true
+      responses:
+        '200':
+          description: Class calendar.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /person/calendar/evaluations:
+    get:
+      tags:
+      - Person
+      operationId: getPersonEvaluationCalendar
+      summary: Evaluation calendar of the authenticated user
+      security:
+      - fenixOAuth: []
+      x-documented-only: true
+      responses:
+        '200':
+          description: Evaluation calendar.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /person/evaluations:
+    get:
+      tags:
+      - Person
+      operationId: getPersonEvaluations
+      summary: Written evaluations available to the authenticated user
+      security:
+      - fenixOAuth: []
+      x-documented-only: true
+      responses:
+        '200':
+          description: Evaluation list.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /person/evaluations/{id}:
+    put:
+      tags:
+      - Person
+      operationId: enrolPersonEvaluation
+      summary: Enrol in or withdraw from an evaluation
+      security:
+      - fenixOAuth: []
+      parameters:
+      - $ref: '#/components/parameters/id'
+      x-documented-only: true
+      responses:
+        '200':
+          description: Updated enrolment state.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /person/payments:
+    get:
+      tags:
+      - Person
+      operationId: getPersonPayments
+      summary: Payment and tuition records of the authenticated user
+      security:
+      - fenixOAuth: []
+      x-documented-only: true
+      responses:
+        '200':
+          description: Payment records.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    OAuthError:
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+  responses:
+    Unauthorized:
+      description: Missing or malformed OAuth access token. Observed 2026-09-01.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OAuthError'
+          examples:
+            live:
+              externalValue: ../examples/fenixedu-error-401.json
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: FenixEdu external identifier of the resource.
+      schema:
+        type: string
+  securitySchemes:
+    fenixOAuth:
+      type: oauth2
+      description: Bennu OAuth 2.0, the authorization layer shipped with FenixEdu and copyrighted by Instituto Superior Tecnico. Applications are registered by an authenticated member of the institution; the access scopes granted are chosen per application at registration time and are not enumerated in a machine-readable document, so no scope names are asserted here.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://fenix.tecnico.ulisboa.pt/oauth/userdialog
+          tokenUrl: https://fenix.tecnico.ulisboa.pt/oauth/access_token
+          scopes: {}

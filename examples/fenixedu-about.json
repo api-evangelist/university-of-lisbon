@@ -1,0 +1,15 @@
+{
+  "institutionName" : "Instituto Superior Técnico",
+  "institutionUrl" : "https://tecnico.ulisboa.pt/",
+  "rssFeeds" : [ {
+    "description" : "News",
+    "url" : "http://tecnico.ulisboa.pt/pt/noticias/rss"
+  } ],
+  "currentAcademicTerm" : "1º Semestre 2026/2027",
+  "languages" : [ "pt-PT", "en-GB" ],
+  "language" : "pt-PT",
+  "rss" : {
+    "news": "http://tecnico.ulisboa.pt/pt/noticias/rss",
+    "events": ""
+  }
+}

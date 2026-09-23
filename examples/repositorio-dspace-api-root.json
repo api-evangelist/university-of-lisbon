@@ -1,0 +1,206 @@
+{
+  "dspaceUI" : "https://repositorio.ulisboa.pt",
+  "dspaceName" : "Repositório Científico de Acesso Aberto da ULisboa",
+  "dspaceServer" : "https://repositorio.ulisboa.pt/server",
+  "dspaceVersion" : "DSpace 7.6.1",
+  "type" : "root",
+  "_links" : {
+    "actuator" : {
+      "href" : "https://repositorio.ulisboa.pt/server/actuator"
+    },
+    "authn" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/authn"
+    },
+    "authorizations" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/authz/authorizations"
+    },
+    "bitstreamformats" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/core/bitstreamformats"
+    },
+    "bitstreams" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/core/bitstreams"
+    },
+    "browses" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/discover/browses"
+    },
+    "bulkaccessconditionoptions" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/config/bulkaccessconditionoptions"
+    },
+    "bundles" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/core/bundles"
+    },
+    "claimedtasks" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/workflow/claimedtasks"
+    },
+    "claimedtasks-search" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/workflow/claimedtasks/search"
+    },
+    "collections" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/core/collections"
+    },
+    "communities" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/core/communities"
+    },
+    "discover" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/discover"
+    },
+    "dso" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/dso/find{?uuid}",
+      "templated" : true
+    },
+    "entitytypes" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/core/entitytypes"
+    },
+    "eperson-registration" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/eperson/registrations"
+    },
+    "epersons" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/eperson/epersons"
+    },
+    "externalsources" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/integration/externalsources"
+    },
+    "features" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/authz/features"
+    },
+    "feedbacks" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/tools/feedbacks"
+    },
+    "groups" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/eperson/groups"
+    },
+    "identifiers" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/pid/identifiers"
+    },
+    "itemrequests" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/tools/itemrequests"
+    },
+    "items" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/core/items"
+    },
+    "itemtemplates" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/core/itemtemplates"
+    },
+    "metadatafields" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/core/metadatafields"
+    },
+    "metadataschemas" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/core/metadataschemas"
+    },
+    "oidc" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/authn"
+    },
+    "pid" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/pid/find{?id}",
+      "templated" : true
+    },
+    "pooltasks" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/workflow/pooltasks"
+    },
+    "pooltasks-search" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/workflow/pooltasks/search"
+    },
+    "processes" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/system/processes"
+    },
+    "properties" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/config/properties"
+    },
+    "registrations" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/eperson/registrations"
+    },
+    "relationships" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/core/relationships"
+    },
+    "relationshiptypes" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/core/relationshiptypes"
+    },
+    "resourcepolicies" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/authz/resourcepolicies"
+    },
+    "resourcepolicies-search" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/authz/resourcepolicies/search"
+    },
+    "scripts" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/system/scripts"
+    },
+    "self" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api"
+    },
+    "sites" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/core/sites"
+    },
+    "statistics" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/statistics"
+    },
+    "submissionaccessoptions" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/config/submissionaccessoptions"
+    },
+    "submissioncclicenseUrls" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/config/submissioncclicenseUrls"
+    },
+    "submissioncclicenseUrls-search" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/config/submissioncclicenseUrls/search"
+    },
+    "submissioncclicenses" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/config/submissioncclicenses"
+    },
+    "submissiondefinitions" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/config/submissiondefinitions"
+    },
+    "submissionforms" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/config/submissionforms"
+    },
+    "submissionsections" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/config/submissionsections"
+    },
+    "submissionuploads" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/config/submissionuploads"
+    },
+    "subscriptions" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/core/subscriptions"
+    },
+    "subscriptions-search" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/core/subscriptions/search"
+    },
+    "supervisionorders" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/core/supervisionorders"
+    },
+    "systemwidealerts" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/system/systemwidealerts"
+    },
+    "usagereports" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/statistics/usagereports"
+    },
+    "versionhistories" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/versioning/versionhistories"
+    },
+    "versions" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/versioning/versions"
+    },
+    "vocabularies" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/submission/vocabularies"
+    },
+    "vocabularyEntryDetails" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/submission/vocabularyEntryDetails"
+    },
+    "vocabularyEntryDetails-search" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/submission/vocabularyEntryDetails/search"
+    },
+    "workflowactions" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/config/workflowactions"
+    },
+    "workflowdefinitions" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/config/workflowdefinitions"
+    },
+    "workflowitems" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/workflow/workflowitems"
+    },
+    "workflowsteps" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/config/workflowsteps"
+    },
+    "workspaceitems" : {
+      "href" : "https://repositorio.ulisboa.pt/server/api/submission/workspaceitems"
+    }
+  }
+}

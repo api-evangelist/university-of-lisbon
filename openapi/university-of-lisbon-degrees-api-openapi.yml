@@ -1,0 +1,244 @@
+openapi: 3.2.0
+info:
+  title: FenixEdu Academic API — Instituto Superior Tecnico…
+  version: v1
+  summary: Public academic, campus and campus-life API of the FenixEdu academic information system operated by Instituto Superior Tecnico.
+  description: Public REST API of FenixEdu, the academic information system operated by Instituto Superior Tecnico (IST), a school of the Universidade de Lisboa.
+  contact:
+    name: Instituto Superior Tecnico — Universidade de Lisboa
+    url: https://tecnico.ulisboa.pt/
+    email: mail@tecnico.ulisboa.pt
+  license:
+    name: Not stated by the provider
+  termsOfService: https://www.ulisboa.pt/en/info/terms-use-0
+  x-operator: institution
+  x-operator-evidence: Host fenix.tecnico.ulisboa.pt is under the institution's own registrable domain ulisboa.pt; /about returns institutionName "Instituto Superior Tecnico" and institutionUrl https://tecnico.ulisboa.pt/; the OAuth dialog at /oauth/userdialog carries an Instituto Superior Tecnico copyright notice. No vendor name appears in servers[], info.title, info.contact or the served payloads.
+  x-provenance:
+    generated: '2026-09-01'
+    method: probed
+    source:
+    - https://fenix.tecnico.ulisboa.pt/api/fenix/v1/about
+    - https://fenixedu.org/dev/api/
+    note: Derived by API Evangelist from live probes and the provider's own human documentation. Not published by Universidade de Lisboa or by Instituto Superior Tecnico.
+servers:
+- url: https://fenix.tecnico.ulisboa.pt/api/fenix/v1
+  description: Production — Instituto Superior Tecnico, Universidade de Lisboa
+tags:
+- name: Degrees
+  description: Degree catalog and the courses that belong to a degree.
+paths:
+  /degrees:
+    get:
+      tags:
+      - Degrees
+      operationId: listDegrees
+      summary: All degrees offered, optionally for one academic term
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/academicTerm'
+      x-probe:
+        date: '2026-09-01'
+        status: 200
+        content_type: application/json
+      responses:
+        '200':
+          description: Degree list.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Degree'
+  /degrees/{id}:
+    get:
+      tags:
+      - Degrees
+      operationId: getDegree
+      summary: One degree, with campus, descriptive information and teaching staff
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/id'
+      - $ref: '#/components/parameters/academicTerm'
+      x-probe:
+        date: '2026-09-01'
+        status: 200
+        content_type: application/json
+      responses:
+        '200':
+          description: Degree record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Degree'
+              examples:
+                live:
+                  externalValue: ../examples/fenixedu-degree.json
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /degrees/{id}/courses:
+    get:
+      tags:
+      - Degrees
+      operationId: listDegreeCourses
+      summary: Courses belonging to a degree in an academic term
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/id'
+      - $ref: '#/components/parameters/academicTerm'
+      x-probe:
+        date: '2026-09-01'
+        status: 200
+        content_type: application/json
+      responses:
+        '200':
+          description: Course list. May be empty for a term in which the degree ran no courses.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CourseSummary'
+components:
+  schemas:
+    SpaceSummary:
+      type: object
+      required:
+      - id
+      - name
+      - type
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          description: Observed values include CAMPUS, BUILDING, FLOOR and ROOM.
+    CourseSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        acronym:
+          type: string
+        academicTerm:
+          type: string
+        url:
+          type: string
+          format: uri
+    DegreeInfo:
+      type: object
+      description: Descriptive prose about a degree. Values are HTML fragments, frequently HTML-entity encoded.
+      properties:
+        description:
+          type: string
+        objectives:
+          type: string
+        designFor:
+          type: string
+        requisites:
+          type: string
+        profissionalExits:
+          type: string
+        history:
+          type: string
+        operationRegime:
+          type: string
+        gratuity:
+          type: string
+        links:
+          type: string
+    Degree:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        acronym:
+          type: string
+        academicTerm:
+          type: string
+        academicTerms:
+          type: array
+          items:
+            type: string
+        type:
+          type: string
+        typeName:
+          type: string
+        url:
+          type: string
+          format: uri
+        campus:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpaceSummary'
+        info:
+          $ref: '#/components/schemas/DegreeInfo'
+        teachers:
+          type: array
+          description: Named teaching staff with personal e-mail addresses and homepage URLs. The captured example in ../examples/ redacts this array under the API Evangelist personal-data guardrail.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              istId:
+                type: string
+              mails:
+                type: array
+                items:
+                  type: string
+              urls:
+                type: array
+                items:
+                  type: string
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        description:
+          type: string
+  responses:
+    NotFound:
+      description: No resource with the supplied identifier. Observed 2026-09-01.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            live:
+              externalValue: ../examples/fenixedu-error-404.json
+  parameters:
+    academicTerm:
+      name: academicTerm
+      in: query
+      required: false
+      description: Academic term in the form "2025/2026". Defaults to the current term.
+      schema:
+        type: string
+        pattern: ^[0-9]{4}/[0-9]{4}$
+      example: 2025/2026
+    id:
+      name: id
+      in: path
+      required: true
+      description: FenixEdu external identifier of the resource.
+      schema:
+        type: string
+  securitySchemes:
+    fenixOAuth:
+      type: oauth2
+      description: Bennu OAuth 2.0, the authorization layer shipped with FenixEdu and copyrighted by Instituto Superior Tecnico. Applications are registered by an authenticated member of the institution; the access scopes granted are chosen per application at registration time and are not enumerated in a machine-readable document, so no scope names are asserted here.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://fenix.tecnico.ulisboa.pt/oauth/userdialog
+          tokenUrl: https://fenix.tecnico.ulisboa.pt/oauth/access_token
+          scopes: {}
