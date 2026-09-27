@@ -145,14 +145,14 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  schemas:
-    OAuthError:
-      type: object
-      properties:
-        error:
-          type: string
-        error_description:
-          type: string
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: FenixEdu external identifier of the resource.
+      schema:
+        type: string
   responses:
     Unauthorized:
       description: Missing or malformed OAuth access token. Observed 2026-09-01.
@@ -163,14 +163,14 @@ components:
           examples:
             live:
               externalValue: ../examples/fenixedu-error-401.json
-  parameters:
-    id:
-      name: id
-      in: path
-      required: true
-      description: FenixEdu external identifier of the resource.
-      schema:
-        type: string
+  schemas:
+    OAuthError:
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
   securitySchemes:
     fenixOAuth:
       type: oauth2

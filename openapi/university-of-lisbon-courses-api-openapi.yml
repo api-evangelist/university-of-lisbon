@@ -111,13 +111,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-        description:
-          type: string
     CourseSummary:
       type: object
       properties:
@@ -132,6 +125,21 @@ components:
         url:
           type: string
           format: uri
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        description:
+          type: string
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: FenixEdu external identifier of the resource.
+      schema:
+        type: string
   responses:
     NotFound:
       description: No resource with the supplied identifier. Observed 2026-09-01.
@@ -142,14 +150,6 @@ components:
           examples:
             live:
               externalValue: ../examples/fenixedu-error-404.json
-  parameters:
-    id:
-      name: id
-      in: path
-      required: true
-      description: FenixEdu external identifier of the resource.
-      schema:
-        type: string
   securitySchemes:
     fenixOAuth:
       type: oauth2
