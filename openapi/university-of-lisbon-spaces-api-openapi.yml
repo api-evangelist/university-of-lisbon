@@ -95,6 +95,13 @@ paths:
                 format: binary
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        description:
+          type: string
     SpaceSummary:
       type: object
       required:
@@ -118,13 +125,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/SpaceSummary'
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-        description:
-          type: string
   parameters:
     id:
       name: id

@@ -100,20 +100,6 @@ paths:
                   $ref: '#/components/schemas/CourseSummary'
 components:
   schemas:
-    SpaceSummary:
-      type: object
-      required:
-      - id
-      - name
-      - type
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        type:
-          type: string
-          description: Observed values include CAMPUS, BUILDING, FLOOR and ROOM.
     Degree:
       type: object
       required:
@@ -163,27 +149,6 @@ components:
                 type: array
                 items:
                   type: string
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-        description:
-          type: string
-    CourseSummary:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        acronym:
-          type: string
-        academicTerm:
-          type: string
-        url:
-          type: string
-          format: uri
     DegreeInfo:
       type: object
       description: Descriptive prose about a degree. Values are HTML fragments, frequently HTML-entity encoded.
@@ -206,6 +171,41 @@ components:
           type: string
         links:
           type: string
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        description:
+          type: string
+    CourseSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        acronym:
+          type: string
+        academicTerm:
+          type: string
+        url:
+          type: string
+          format: uri
+    SpaceSummary:
+      type: object
+      required:
+      - id
+      - name
+      - type
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          description: Observed values include CAMPUS, BUILDING, FLOOR and ROOM.
   parameters:
     id:
       name: id
