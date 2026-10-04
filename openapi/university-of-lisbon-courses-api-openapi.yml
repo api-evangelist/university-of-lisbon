@@ -121,13 +121,6 @@ components:
             live:
               externalValue: ../examples/fenixedu-error-404.json
   schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-        description:
-          type: string
     CourseSummary:
       type: object
       properties:
@@ -142,6 +135,13 @@ components:
         url:
           type: string
           format: uri
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        description:
+          type: string
   parameters:
     id:
       name: id

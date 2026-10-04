@@ -155,14 +155,6 @@ components:
           examples:
             live:
               externalValue: ../examples/fenixedu-error-401.json
-  parameters:
-    id:
-      name: id
-      in: path
-      required: true
-      description: FenixEdu external identifier of the resource.
-      schema:
-        type: string
   schemas:
     OAuthError:
       type: object
@@ -171,6 +163,14 @@ components:
           type: string
         error_description:
           type: string
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: FenixEdu external identifier of the resource.
+      schema:
+        type: string
   securitySchemes:
     fenixOAuth:
       type: oauth2

@@ -94,14 +94,26 @@ paths:
                 type: string
                 format: binary
 components:
+  responses:
+    NotFound:
+      description: No resource with the supplied identifier. Observed 2026-09-01.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            live:
+              externalValue: ../examples/fenixedu-error-404.json
   schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-        description:
-          type: string
+    Space:
+      allOf:
+      - $ref: '#/components/schemas/SpaceSummary'
+      - type: object
+        properties:
+          containedSpaces:
+            type: array
+            items:
+              $ref: '#/components/schemas/SpaceSummary'
     SpaceSummary:
       type: object
       required:
@@ -116,15 +128,13 @@ components:
         type:
           type: string
           description: Observed values include CAMPUS, BUILDING, FLOOR and ROOM.
-    Space:
-      allOf:
-      - $ref: '#/components/schemas/SpaceSummary'
-      - type: object
-        properties:
-          containedSpaces:
-            type: array
-            items:
-              $ref: '#/components/schemas/SpaceSummary'
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        description:
+          type: string
   parameters:
     id:
       name: id
@@ -133,16 +143,6 @@ components:
       description: FenixEdu external identifier of the resource.
       schema:
         type: string
-  responses:
-    NotFound:
-      description: No resource with the supplied identifier. Observed 2026-09-01.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            live:
-              externalValue: ../examples/fenixedu-error-404.json
   securitySchemes:
     fenixOAuth:
       type: oauth2

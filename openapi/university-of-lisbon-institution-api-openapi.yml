@@ -95,6 +95,23 @@ paths:
                   $ref: '#/components/schemas/Contact'
 components:
   schemas:
+    Contact:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        fax:
+          type: string
+        address:
+          type: string
+        postalCode:
+          type: string
+        workingHours:
+          type: string
     About:
       type: object
       properties:
@@ -124,23 +141,6 @@ components:
           type: object
           additionalProperties:
             type: string
-    Contact:
-      type: object
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-        fax:
-          type: string
-        address:
-          type: string
-        postalCode:
-          type: string
-        workingHours:
-          type: string
   securitySchemes:
     fenixOAuth:
       type: oauth2

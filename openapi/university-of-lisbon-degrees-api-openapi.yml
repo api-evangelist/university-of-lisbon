@@ -100,6 +100,20 @@ paths:
                   $ref: '#/components/schemas/CourseSummary'
 components:
   schemas:
+    CourseSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        acronym:
+          type: string
+        academicTerm:
+          type: string
+        url:
+          type: string
+          format: uri
     Degree:
       type: object
       required:
@@ -149,6 +163,20 @@ components:
                 type: array
                 items:
                   type: string
+    SpaceSummary:
+      type: object
+      required:
+      - id
+      - name
+      - type
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          description: Observed values include CAMPUS, BUILDING, FLOOR and ROOM.
     DegreeInfo:
       type: object
       description: Descriptive prose about a degree. Values are HTML fragments, frequently HTML-entity encoded.
@@ -178,51 +206,6 @@ components:
           type: string
         description:
           type: string
-    CourseSummary:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        acronym:
-          type: string
-        academicTerm:
-          type: string
-        url:
-          type: string
-          format: uri
-    SpaceSummary:
-      type: object
-      required:
-      - id
-      - name
-      - type
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        type:
-          type: string
-          description: Observed values include CAMPUS, BUILDING, FLOOR and ROOM.
-  parameters:
-    id:
-      name: id
-      in: path
-      required: true
-      description: FenixEdu external identifier of the resource.
-      schema:
-        type: string
-    academicTerm:
-      name: academicTerm
-      in: query
-      required: false
-      description: Academic term in the form "2025/2026". Defaults to the current term.
-      schema:
-        type: string
-        pattern: ^[0-9]{4}/[0-9]{4}$
-      example: 2025/2026
   responses:
     NotFound:
       description: No resource with the supplied identifier. Observed 2026-09-01.
@@ -233,6 +216,23 @@ components:
           examples:
             live:
               externalValue: ../examples/fenixedu-error-404.json
+  parameters:
+    academicTerm:
+      name: academicTerm
+      in: query
+      required: false
+      description: Academic term in the form "2025/2026". Defaults to the current term.
+      schema:
+        type: string
+        pattern: ^[0-9]{4}/[0-9]{4}$
+      example: 2025/2026
+    id:
+      name: id
+      in: path
+      required: true
+      description: FenixEdu external identifier of the resource.
+      schema:
+        type: string
   securitySchemes:
     fenixOAuth:
       type: oauth2
