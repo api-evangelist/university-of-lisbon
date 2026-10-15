@@ -1,0 +1,47 @@
+edges:
+- partner_name: eduGAIN
+  partner: null
+  type: register
+  channel: standard-directory
+  relationship: network-participant
+  direction: partner-built
+  evidence: https://technical.edugain.org/api.php?action=list_entities&type=idp&format=json
+  category: research and education identity federation
+  contract_reference:
+    network: eduGAIN (GÉANT interfederation)
+    spec_file: null
+    roles:
+    - identity-provider
+    role: identity-provider
+    federations:
+    - RCTSAAI
+    matched_by: domain+idp-scope:ulisboa.pt
+    entities:
+    - entity_id: https://id.tecnico.ulisboa.pt/saml
+      role: identity-provider
+      federation: RCTSAAI
+      display_name: ULisboa - Instituto Superior Técnico
+      entity_categories:
+      - '4'
+      - '11'
+      - '76'
+      sirtfi: true
+      coco: false
+    - entity_id: https://id.ulisboa.pt/nidp/saml2/metadata
+      role: identity-provider
+      federation: RCTSAAI
+      display_name: Universidade de Lisboa
+      entity_categories:
+      - '4'
+      - '11'
+      sirtfi: false
+      coco: false
+    detected_by: sweep-higher-ed.py
+    detected: '2026-10-15'
+  detected_by: sweep-higher-ed.py
+  first_seen: '2026-10-15'
+generated: '2026-10-15'
+method: searched
+checked:
+- https://technical.edugain.org/api.php?action=list_entities&type=idp&format=json
+- https://technical.edugain.org/api.php?action=list_entities&type=sp&format=json
