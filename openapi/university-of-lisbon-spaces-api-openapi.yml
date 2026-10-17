@@ -94,26 +94,15 @@ paths:
                 type: string
                 format: binary
 components:
-  responses:
-    NotFound:
-      description: No resource with the supplied identifier. Observed 2026-09-01.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            live:
-              externalValue: ../examples/fenixedu-error-404.json
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: FenixEdu external identifier of the resource.
+      schema:
+        type: string
   schemas:
-    Space:
-      allOf:
-      - $ref: '#/components/schemas/SpaceSummary'
-      - type: object
-        properties:
-          containedSpaces:
-            type: array
-            items:
-              $ref: '#/components/schemas/SpaceSummary'
     SpaceSummary:
       type: object
       required:
@@ -135,14 +124,25 @@ components:
           type: string
         description:
           type: string
-  parameters:
-    id:
-      name: id
-      in: path
-      required: true
-      description: FenixEdu external identifier of the resource.
-      schema:
-        type: string
+    Space:
+      allOf:
+      - $ref: '#/components/schemas/SpaceSummary'
+      - type: object
+        properties:
+          containedSpaces:
+            type: array
+            items:
+              $ref: '#/components/schemas/SpaceSummary'
+  responses:
+    NotFound:
+      description: No resource with the supplied identifier. Observed 2026-09-01.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            live:
+              externalValue: ../examples/fenixedu-error-404.json
   securitySchemes:
     fenixOAuth:
       type: oauth2
